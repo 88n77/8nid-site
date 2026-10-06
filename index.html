@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8nID Anty — антідетект-браузер для мультиакаунтингу</title>
+<meta name="description" content="8nID Anty — антідетект-браузер із власним ядром. Безліміт профілів, усе локально, 2 дні безкоштовно.">
+<link rel="icon" href="assets/favicon.ico">
+<style>
+:root{
+  --bg:#0a0a0b; --panel:#121214; --panel2:#17171a; --bd:#262629;
+  --tx:#ededf0; --mut:#9a9aa4; --dim:#6a6a72;
+  --acc:#ff7a00; --acc2:#ff9a3c; --green:#3ddc84;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:"Segoe UI",Inter,system-ui,Arial,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.accent{color:var(--acc)}
+/* фонове світіння */
+body::before{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;
+  background:radial-gradient(900px 500px at 20% 0%,rgba(255,122,0,.10),transparent 55%),
+             radial-gradient(800px 500px at 90% 20%,rgba(255,96,0,.07),transparent 50%);}
+header,section,footer{position:relative;z-index:1}
+
+/* nav */
+nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:rgba(10,10,11,.7);border-bottom:1px solid var(--bd)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;letter-spacing:.3px}
+.brand img{width:30px;height:30px;border-radius:7px}
+.nav-links{display:flex;align-items:center;gap:26px}
+.nav-links a{color:var(--mut);font-size:14px;transition:color .15s}
+.nav-links a:hover{color:var(--tx)}
+.btn{display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;font-family:inherit;font-weight:700;border-radius:11px;transition:transform .12s,box-shadow .15s,filter .15s}
+.btn-primary{background:linear-gradient(90deg,#ff8a1e,#ff6a00);color:#1a0e00;padding:11px 20px;font-size:14.5px;box-shadow:0 10px 26px rgba(255,122,0,.28)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 14px 34px rgba(255,122,0,.42);filter:brightness(1.05)}
+.btn-ghost{background:transparent;border:1px solid var(--bd);color:var(--tx);padding:10px 18px;font-size:14px}
+.btn-ghost:hover{border-color:var(--acc)}
+.btn-lg{padding:15px 30px;font-size:16px;border-radius:13px}
+
+/* hero */
+.hero{padding:90px 0 70px;text-align:center}
+.hero .pill{display:inline-flex;align-items:center;gap:8px;background:rgba(61,220,132,.1);border:1px solid rgba(61,220,132,.3);color:#9fe9bf;font-size:13px;font-weight:600;padding:6px 14px;border-radius:30px;margin-bottom:26px}
+.hero h1{font-size:56px;line-height:1.08;font-weight:900;letter-spacing:-1px;margin-bottom:20px}
+.hero p.sub{font-size:19px;color:var(--mut);max-width:640px;margin:0 auto 34px}
+.hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.hero .note{margin-top:16px;font-size:13px;color:var(--dim)}
+.hero .note b{color:var(--green)}
+
+/* макет вікна */
+.shot{margin:60px auto 0;max-width:900px;border-radius:16px;border:1px solid var(--bd);overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.6);background:var(--panel)}
+.shot-bar{display:flex;gap:7px;padding:12px 16px;background:#0e0e10;border-bottom:1px solid var(--bd)}
+.shot-bar i{width:11px;height:11px;border-radius:50%;background:#333}
+.shot-body{padding:0;display:block;width:100%;background:#0d0d0f}
+.shot-body img{display:block;width:100%}
+
+/* секції */
+section{padding:72px 0}
+.sec-h{text-align:center;margin-bottom:48px}
+.sec-h h2{font-size:38px;font-weight:800;letter-spacing:-.5px}
+.sec-h p{color:var(--mut);font-size:17px;margin-top:12px}
+
+/* 3 переваги */
+.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.feat{background:var(--panel);border:1px solid var(--bd);border-radius:16px;padding:28px}
+.feat .ico{width:46px;height:46px;border-radius:12px;background:rgba(255,122,0,.12);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.feat .ico svg{width:24px;height:24px;color:var(--acc)}
+.feat h3{font-size:19px;font-weight:700;margin-bottom:8px}
+.feat p{color:var(--mut);font-size:14.5px}
+
+/* список фіч */
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px 40px;max-width:860px;margin:0 auto}
+.li{display:flex;gap:12px;align-items:flex-start}
+.li .chk{color:var(--green);font-weight:800;flex:none;margin-top:1px}
+.li b{color:var(--tx)}
+.li span{color:var(--mut);font-size:15px}
+
+/* тарифи */
+.pricing{background:linear-gradient(180deg,transparent,rgba(255,122,0,.03))}
+.plans{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.plan{position:relative;background:var(--panel);border:1.5px solid var(--bd);border-radius:16px;padding:26px 20px;text-align:center;transition:transform .14s,border-color .14s,box-shadow .14s}
+.plan:hover{transform:translateY(-3px);border-color:rgba(255,122,0,.5);box-shadow:0 14px 34px rgba(0,0,0,.4)}
+.plan.best{border-color:var(--acc);box-shadow:0 0 0 1px rgba(255,122,0,.3)}
+.plan .tag{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#3ddc84,#2fc46f);color:#06240f;font-size:11px;font-weight:800;padding:3px 12px;border-radius:14px;white-space:nowrap}
+.plan .per{font-size:14px;color:var(--mut);font-weight:700;margin-bottom:10px}
+.plan .price{font-size:40px;font-weight:900;letter-spacing:-1px}
+.plan .price .cur{font-size:22px;vertical-align:top;color:var(--acc)}
+.plan .mo{font-size:13px;color:var(--dim);margin-top:4px}
+.plan .save{margin-top:8px;font-size:12.5px;color:var(--green);font-weight:700;min-height:16px}
+.pricing-note{text-align:center;color:var(--mut);margin-top:30px;font-size:15px}
+.pricing-note b{color:var(--tx)}
+
+/* CTA */
+.cta{text-align:center}
+.cta-box{background:linear-gradient(135deg,rgba(255,122,0,.1),rgba(255,122,0,.02));border:1px solid rgba(255,122,0,.3);border-radius:22px;padding:56px 30px}
+.cta-box h2{font-size:34px;font-weight:800;margin-bottom:12px}
+.cta-box p{color:var(--mut);font-size:17px;margin-bottom:28px}
+
+/* footer */
+footer{border-top:1px solid var(--bd);padding:36px 0;color:var(--dim)}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;font-size:13.5px}
+footer a{color:var(--mut)}footer a:hover{color:var(--tx)}
+
+@media(max-width:860px){
+  .hero h1{font-size:38px}.sec-h h2{font-size:28px}
+  .feats,.plans,.grid2{grid-template-columns:1fr}
+  .nav-links a:not(.btn){display:none}
+}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top"><img src="assets/logo.png" alt=""> 8nID<span class="accent">Anty</span></a>
+  <div class="nav-links">
+    <a href="#why">Переваги</a>
+    <a href="#features">Можливості</a>
+    <a href="#pricing">Тарифи</a>
+    <a class="btn btn-primary dl" href="#download">Завантажити</a>
+  </div>
+</div></nav>
+
+<header class="hero" id="top"><div class="wrap">
+  <div class="pill">● 2 дні безкоштовно · без прив'язки картки</div>
+  <h1>Антідетект-браузер<br>із <span class="accent">власним ядром</span></h1>
+  <p class="sub">Створюй і веди безліч акаунтів без блокувань. Унікальний відбиток для кожного профілю, усе зберігається локально на твоєму ПК.</p>
+  <div class="hero-actions">
+    <a class="btn btn-primary btn-lg dl" href="#download">⬇ Завантажити для Windows</a>
+    <a class="btn btn-ghost btn-lg" href="#pricing">Тарифи</a>
+  </div>
+  <div class="note">Пробний період <b>2 дні</b> · безліміт профілів · від <b>$39/міс</b></div>
+
+  <div class="shot">
+    <div class="shot-bar"><i></i><i></i><i></i></div>
+    <div class="shot-body"><img src="assets/screenshot.png" alt="8nID Anty" onerror="this.parentElement.innerHTML='<div style=&quot;padding:80px;text-align:center;color:#6a6a72&quot;>Менеджер профілів 8nID Anty</div>'"></div>
+  </div>
+</div></header>
+
+<section id="why"><div class="wrap">
+  <div class="sec-h"><h2>Чому 8nID</h2><p>Три речі, яких немає в більшості антіків</p></div>
+  <div class="feats">
+    <div class="feat">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg></div>
+      <h3>Власне ядро</h3>
+      <p>Не обгортка над Chrome, а власний форк Chromium. Підміна відбитка на рівні ядра, яку не видно сайтам.</p>
+    </div>
+    <div class="feat">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></div>
+      <h3>Усе локально</h3>
+      <p>Профілі, куки, проксі й гаманці зберігаються лише на твоєму ПК. Нічого не йде в хмару.</p>
+    </div>
+    <div class="feat">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg></div>
+      <h3>Безліміт профілів</h3>
+      <p>Створюй скільки треба акаунтів за одну ціну. Жодних доплат за кількість профілів.</p>
+    </div>
+  </div>
+</div></section>
+
+<section id="features"><div class="wrap">
+  <div class="sec-h"><h2>Можливості</h2><p>Усе для безпечного мультиакаунтингу</p></div>
+  <div class="grid2">
+    <div class="li"><span class="chk">✓</span><span><b>Унікальний відбиток</b> кожного профілю: canvas, WebGL, аудіо, шрифти, GPU, екран</span></div>
+    <div class="li"><span class="chk">✓</span><span><b>Перевірка відбитка</b> в один клік — бачиш, що показує браузер</span></div>
+    <div class="li"><span class="chk">✓</span><span><b>Проксі</b> HTTP/SOCKS5 з перевіркою й авто-визначенням гео</span></div>
+    <div class="li"><span class="chk">✓</span><span><b>Масове створення</b> профілів з унікальними відбитками</span></div>
+    <div class="li"><span class="chk">✓</span><span><b>WebRTC без витоку</b> реального IP, підміна таймзони та мови під проксі</span></div>
+    <div class="li"><span class="chk">✓</span><span><b>Імпорт/експорт</b> профілів і кук, резервні копії</span></div>
+    <div class="li"><span class="chk">✓</span><span><b>Групи та фільтри</b>, швидкий запуск і зупинка пачкою</span></div>
+    <div class="li"><span class="chk">✓</span><span><b>Оновлення ядра першими</b> — свіжий Chrome раніше за конкурентів</span></div>
+  </div>
+</div></section>
+
+<section id="pricing" class="pricing"><div class="wrap">
+  <div class="sec-h"><h2>Тарифи</h2><p>Безліміт профілів на всіх планах. Оплата криптою (USDT).</p></div>
+  <div class="plans">
+    <div class="plan"><div class="per">1 місяць</div><div class="price"><span class="cur">$</span>39</div><div class="mo">$39/міс</div><div class="save"></div></div>
+    <div class="plan best"><div class="tag">популярний</div><div class="per">3 місяці</div><div class="price"><span class="cur">$</span>100</div><div class="mo">$33/міс</div><div class="save">вигода $17</div></div>
+    <div class="plan"><div class="per">6 місяців</div><div class="price"><span class="cur">$</span>180</div><div class="mo">$30/міс</div><div class="save">вигода $54</div></div>
+    <div class="plan"><div class="per">1 рік</div><div class="price"><span class="cur">$</span>300</div><div class="mo">$25/міс</div><div class="save">вигода $168</div></div>
+  </div>
+  <p class="pricing-note">Почни з <b>2 днів безкоштовно</b> — підписку оформиш прямо в застосунку.</p>
+</div></section>
+
+<section class="cta" id="download"><div class="wrap">
+  <div class="cta-box">
+    <h2>Спробуй 8nID Anty безкоштовно</h2>
+    <p>Завантаж, зареєструйся й отримай 2 дні повного доступу. Без картки.</p>
+    <a class="btn btn-primary btn-lg dl" href="https://github.com/88n77/8nid-anty-pro/releases/latest">⬇ Завантажити для Windows</a>
+    <div class="note" style="margin-top:18px;color:var(--dim);font-size:13px">Windows 10/11 · 64-bit · <span id="dl-ver"></span></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <span>© 2026 8nID Anty · Power by 88n77</span>
+  <span><a href="#pricing">Тарифи</a> &nbsp;·&nbsp; <a href="https://t.me/n88n77" target="_blank">Підтримка</a></span>
+</div></footer>
+
+<script>
+// Динамічне посилання на останній інсталятор з GitHub Releases
+(async () => {
+  try {
+    const r = await fetch('https://api.github.com/repos/88n77/8nid-anty-pro/releases/latest');
+    const j = await r.json();
+    const exe = (j.assets || []).find(a => a.name.endsWith('.exe'));
+    if (exe) document.querySelectorAll('a.dl').forEach(a => { if (a.getAttribute('href') === '#download') return; a.href = exe.browser_download_url; });
+    const vEl = document.getElementById('dl-ver'); if (vEl && j.tag_name) vEl.textContent = j.tag_name;
+  } catch (_) { /* лишаємо посилання на сторінку релізів */ }
+})();
+</script>
+</body>
+</html>
