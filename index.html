@@ -2,212 +2,412 @@
 <html lang="uk">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>8nID Anty — антідетект-браузер для мультиакаунтингу</title>
-<meta name="description" content="8nID Anty — антідетект-браузер із власним ядром. Безліміт профілів, усе локально, 2 дні безкоштовно.">
-<link rel="icon" href="assets/favicon.ico">
-<style>
-:root{
-  --bg:#0a0a0b; --panel:#121214; --panel2:#17171a; --bd:#262629;
-  --tx:#ededf0; --mut:#9a9aa4; --dim:#6a6a72;
-  --acc:#ff7a00; --acc2:#ff9a3c; --green:#3ddc84;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--tx);font-family:"Segoe UI",Inter,system-ui,Arial,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-a{color:inherit;text-decoration:none}
-.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
-.accent{color:var(--acc)}
-/* фонове світіння */
-body::before{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;
-  background:radial-gradient(900px 500px at 20% 0%,rgba(255,122,0,.10),transparent 55%),
-             radial-gradient(800px 500px at 90% 20%,rgba(255,96,0,.07),transparent 50%);}
-header,section,footer{position:relative;z-index:1}
-
-/* nav */
-nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:rgba(10,10,11,.7);border-bottom:1px solid var(--bd)}
-nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;letter-spacing:.3px}
-.brand img{width:30px;height:30px;border-radius:7px}
-.nav-links{display:flex;align-items:center;gap:26px}
-.nav-links a{color:var(--mut);font-size:14px;transition:color .15s}
-.nav-links a:hover{color:var(--tx)}
-.btn{display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;font-family:inherit;font-weight:700;border-radius:11px;transition:transform .12s,box-shadow .15s,filter .15s}
-.btn-primary{background:linear-gradient(90deg,#ff8a1e,#ff6a00);color:#1a0e00;padding:11px 20px;font-size:14.5px;box-shadow:0 10px 26px rgba(255,122,0,.28)}
-.btn-primary:hover{transform:translateY(-1px);box-shadow:0 14px 34px rgba(255,122,0,.42);filter:brightness(1.05)}
-.btn-ghost{background:transparent;border:1px solid var(--bd);color:var(--tx);padding:10px 18px;font-size:14px}
-.btn-ghost:hover{border-color:var(--acc)}
-.btn-lg{padding:15px 30px;font-size:16px;border-radius:13px}
-
-/* hero */
-.hero{padding:90px 0 70px;text-align:center}
-.hero .pill{display:inline-flex;align-items:center;gap:8px;background:rgba(61,220,132,.1);border:1px solid rgba(61,220,132,.3);color:#9fe9bf;font-size:13px;font-weight:600;padding:6px 14px;border-radius:30px;margin-bottom:26px}
-.hero h1{font-size:56px;line-height:1.08;font-weight:900;letter-spacing:-1px;margin-bottom:20px}
-.hero p.sub{font-size:19px;color:var(--mut);max-width:640px;margin:0 auto 34px}
-.hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-.hero .note{margin-top:16px;font-size:13px;color:var(--dim)}
-.hero .note b{color:var(--green)}
-
-/* макет вікна */
-.shot{margin:60px auto 0;max-width:900px;border-radius:16px;border:1px solid var(--bd);overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.6);background:var(--panel)}
-.shot-bar{display:flex;gap:7px;padding:12px 16px;background:#0e0e10;border-bottom:1px solid var(--bd)}
-.shot-bar i{width:11px;height:11px;border-radius:50%;background:#333}
-.shot-body{padding:0;display:block;width:100%;background:#0d0d0f}
-.shot-body img{display:block;width:100%}
-
-/* секції */
-section{padding:72px 0}
-.sec-h{text-align:center;margin-bottom:48px}
-.sec-h h2{font-size:38px;font-weight:800;letter-spacing:-.5px}
-.sec-h p{color:var(--mut);font-size:17px;margin-top:12px}
-
-/* 3 переваги */
-.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.feat{background:var(--panel);border:1px solid var(--bd);border-radius:16px;padding:28px}
-.feat .ico{width:46px;height:46px;border-radius:12px;background:rgba(255,122,0,.12);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
-.feat .ico svg{width:24px;height:24px;color:var(--acc)}
-.feat h3{font-size:19px;font-weight:700;margin-bottom:8px}
-.feat p{color:var(--mut);font-size:14.5px}
-
-/* список фіч */
-.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px 40px;max-width:860px;margin:0 auto}
-.li{display:flex;gap:12px;align-items:flex-start}
-.li .chk{color:var(--green);font-weight:800;flex:none;margin-top:1px}
-.li b{color:var(--tx)}
-.li span{color:var(--mut);font-size:15px}
-
-/* тарифи */
-.pricing{background:linear-gradient(180deg,transparent,rgba(255,122,0,.03))}
-.plans{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.plan{position:relative;background:var(--panel);border:1.5px solid var(--bd);border-radius:16px;padding:26px 20px;text-align:center;transition:transform .14s,border-color .14s,box-shadow .14s}
-.plan:hover{transform:translateY(-3px);border-color:rgba(255,122,0,.5);box-shadow:0 14px 34px rgba(0,0,0,.4)}
-.plan.best{border-color:var(--acc);box-shadow:0 0 0 1px rgba(255,122,0,.3)}
-.plan .tag{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#3ddc84,#2fc46f);color:#06240f;font-size:11px;font-weight:800;padding:3px 12px;border-radius:14px;white-space:nowrap}
-.plan .per{font-size:14px;color:var(--mut);font-weight:700;margin-bottom:10px}
-.plan .price{font-size:40px;font-weight:900;letter-spacing:-1px}
-.plan .price .cur{font-size:22px;vertical-align:top;color:var(--acc)}
-.plan .mo{font-size:13px;color:var(--dim);margin-top:4px}
-.plan .save{margin-top:8px;font-size:12.5px;color:var(--green);font-weight:700;min-height:16px}
-.pricing-note{text-align:center;color:var(--mut);margin-top:30px;font-size:15px}
-.pricing-note b{color:var(--tx)}
-
-/* CTA */
-.cta{text-align:center}
-.cta-box{background:linear-gradient(135deg,rgba(255,122,0,.1),rgba(255,122,0,.02));border:1px solid rgba(255,122,0,.3);border-radius:22px;padding:56px 30px}
-.cta-box h2{font-size:34px;font-weight:800;margin-bottom:12px}
-.cta-box p{color:var(--mut);font-size:17px;margin-bottom:28px}
-
-/* footer */
-footer{border-top:1px solid var(--bd);padding:36px 0;color:var(--dim)}
-footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;font-size:13.5px}
-footer a{color:var(--mut)}footer a:hover{color:var(--tx)}
-
-@media(max-width:860px){
-  .hero h1{font-size:38px}.sec-h h2{font-size:28px}
-  .feats,.plans,.grid2{grid-template-columns:1fr}
-  .nav-links a:not(.btn){display:none}
-}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>8nID Anty Pro — твій простір для мультиакаунтингу</title>
+<meta name="description" content="Антидетект-браузер із власним ядром Chromium. Локальні профілі, проксі, синхронізація вікон. Free назавжди — 5 профілів.">
+<meta property="og:title" content="8nID Anty Pro — твій простір для мультиакаунтингу">
+<meta property="og:description" content="Антидетект-браузер із власним ядром Chromium. Локальні профілі, проксі, синхронізація вікон. Free назавжди — 5 профілів.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/inter-cyrillic-900-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/inter-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/site.css?v=20261009m">
+<script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
 
-<nav><div class="wrap">
-  <a class="brand" href="#top"><img src="assets/logo.png" alt=""> 8nID<span class="accent">Anty</span></a>
-  <div class="nav-links">
-    <a href="#why">Переваги</a>
-    <a href="#features">Можливості</a>
-    <a href="#pricing">Тарифи</a>
-    <a class="btn btn-primary dl" href="#download">Завантажити</a>
-  </div>
-</div></nav>
-
-<header class="hero" id="top"><div class="wrap">
-  <div class="pill">● 2 дні безкоштовно · без прив'язки картки</div>
-  <h1>Антідетект-браузер<br>із <span class="accent">власним ядром</span></h1>
-  <p class="sub">Створюй і веди безліч акаунтів без блокувань. Унікальний відбиток для кожного профілю, усе зберігається локально на твоєму ПК.</p>
-  <div class="hero-actions">
-    <a class="btn btn-primary btn-lg dl" href="#download">⬇ Завантажити для Windows</a>
-    <a class="btn btn-ghost btn-lg" href="#pricing">Тарифи</a>
-  </div>
-  <div class="note">Пробний період <b>2 дні</b> · безліміт профілів · від <b>$39/міс</b></div>
-
-  <div class="shot">
-    <div class="shot-bar"><i></i><i></i><i></i></div>
-    <div class="shot-body"><img src="assets/screenshot.png" alt="8nID Anty" onerror="this.parentElement.innerHTML='<div style=&quot;padding:80px;text-align:center;color:#6a6a72&quot;>Менеджер профілів 8nID Anty</div>'"></div>
-  </div>
-</div></header>
-
-<section id="why"><div class="wrap">
-  <div class="sec-h"><h2>Чому 8nID</h2><p>Три речі, яких немає в більшості антіків</p></div>
-  <div class="feats">
-    <div class="feat">
-      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg></div>
-      <h3>Власне ядро</h3>
-      <p>Не обгортка над Chrome, а власний форк Chromium. Підміна відбитка на рівні ядра, яку не видно сайтам.</p>
-    </div>
-    <div class="feat">
-      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></div>
-      <h3>Усе локально</h3>
-      <p>Профілі, куки, проксі й гаманці зберігаються лише на твоєму ПК. Нічого не йде в хмару.</p>
-    </div>
-    <div class="feat">
-      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg></div>
-      <h3>Безліміт профілів</h3>
-      <p>Створюй скільки треба акаунтів за одну ціну. Жодних доплат за кількість профілів.</p>
+<!-- ============ HEADER ============ -->
+<header class="top" id="top">
+  <div class="wrap top__in">
+    <a class="logo logo--full" href="#hero"><img class="logo__mark" src="assets/img/logo-64.webp" srcset="assets/img/logo-64.webp 1x, assets/img/logo-128.webp 2x" alt="" width="34" height="34"><span>8nID <b>Anty</b></span><em class="pro">PRO</em></a>
+    <nav class="menu" data-ta="navLabel" aria-label="Головна навігація">
+      <a href="#osnova" data-t="navBase">Основа</a>
+      <a href="#mozhlyvosti" data-t="navFeatures">Можливості</a>
+      <a href="#robota" data-t="navWorkflow">Для роботи</a>
+      <a href="#taryfy" data-t="navPricing">Тарифи</a>
+      <a href="#faq" data-t="navFaq">FAQ</a>
+    </nav>
+    <div class="top__right">
+      <div class="langsel" id="langsel">
+        <button class="lang" id="langBtn" type="button" aria-haspopup="listbox" aria-expanded="false" data-ta="language" aria-label="Мова"><span id="langCode">UA</span></button>
+        <ul class="langsel__list" role="listbox" id="langList">
+          <li><button type="button" role="option" data-lang="uk"><b>UA</b>Українська</button></li>
+          <li><button type="button" role="option" data-lang="en"><b>EN</b>English</button></li>
+          <li><button type="button" role="option" data-lang="pl"><b>PL</b>Polski</button></li>
+          <li><button type="button" role="option" data-lang="ru"><b>RU</b>Русский</button></li>
+          <li><button type="button" role="option" data-lang="fr"><b>FR</b>Français</button></li>
+          <li><button type="button" role="option" data-lang="pt"><b>PT</b>Português</button></li>
+          <li><button type="button" role="option" data-lang="tr"><b>TR</b>Türkçe</button></li>
+        </ul>
+      </div>
+      <a class="btn btn--ghost btn--sm top__cab" href="account.html"><span data-t="navCabinet">Кабінет</span></a>
+      <a class="btn btn--primary btn--sm top__dl" href="#start"><span data-t="navDownload">Завантажити</span></a>
+      <button class="burger" id="burger" type="button" data-ta="menu" aria-label="Відкрити меню" aria-expanded="false"><i></i><i></i></button>
     </div>
   </div>
-</div></section>
+</header>
 
-<section id="features"><div class="wrap">
-  <div class="sec-h"><h2>Можливості</h2><p>Усе для безпечного мультиакаунтингу</p></div>
-  <div class="grid2">
-    <div class="li"><span class="chk">✓</span><span><b>Унікальний відбиток</b> кожного профілю: canvas, WebGL, аудіо, шрифти, GPU, екран</span></div>
-    <div class="li"><span class="chk">✓</span><span><b>Перевірка відбитка</b> в один клік — бачиш, що показує браузер</span></div>
-    <div class="li"><span class="chk">✓</span><span><b>Проксі</b> HTTP/SOCKS5 з перевіркою й авто-визначенням гео</span></div>
-    <div class="li"><span class="chk">✓</span><span><b>Масове створення</b> профілів з унікальними відбитками</span></div>
-    <div class="li"><span class="chk">✓</span><span><b>WebRTC без витоку</b> реального IP, підміна таймзони та мови під проксі</span></div>
-    <div class="li"><span class="chk">✓</span><span><b>Імпорт/експорт</b> профілів і кук, резервні копії</span></div>
-    <div class="li"><span class="chk">✓</span><span><b>Групи та фільтри</b>, швидкий запуск і зупинка пачкою</span></div>
-    <div class="li"><span class="chk">✓</span><span><b>Оновлення ядра першими</b> — свіжий Chrome раніше за конкурентів</span></div>
+<!-- mobile menu -->
+<div class="mnav" id="mnav">
+  <nav>
+    <a href="#osnova"><em>01</em><span data-t="navBase">Основа</span></a>
+    <a href="#mozhlyvosti"><em>02</em><span data-t="navFeatures">Можливості</span></a>
+    <a href="#robota"><em>03</em><span data-t="navWorkflow">Для роботи</span></a>
+    <a href="#taryfy"><em>04</em><span data-t="navPricing">Тарифи</span></a>
+    <a href="#faq"><em>05</em><span data-t="navFaq">FAQ</span></a>
+    <a href="account.html"><em>06</em><span data-t="navCabinet">Кабінет</span></a>
+  </nav>
+  <div class="mnav__langs">
+    <button type="button" data-lang="uk">UA</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="pl">PL</button><button type="button" data-lang="ru">RU</button><button type="button" data-lang="fr">FR</button><button type="button" data-lang="pt">PT</button><button type="button" data-lang="tr">TR</button>
   </div>
-</div></section>
+  <a class="btn btn--primary" href="#start"><span data-t="navDownload">Завантажити</span></a>
+</div>
 
-<section id="pricing" class="pricing"><div class="wrap">
-  <div class="sec-h"><h2>Тарифи</h2><p>Безліміт профілів на всіх планах. Оплата криптою (USDT).</p></div>
-  <div class="plans">
-    <div class="plan"><div class="per">1 місяць</div><div class="price"><span class="cur">$</span>39</div><div class="mo">$39/міс</div><div class="save"></div></div>
-    <div class="plan best"><div class="tag">популярний</div><div class="per">3 місяці</div><div class="price"><span class="cur">$</span>100</div><div class="mo">$33/міс</div><div class="save">вигода $17</div></div>
-    <div class="plan"><div class="per">6 місяців</div><div class="price"><span class="cur">$</span>180</div><div class="mo">$30/міс</div><div class="save">вигода $54</div></div>
-    <div class="plan"><div class="per">1 рік</div><div class="price"><span class="cur">$</span>300</div><div class="mo">$25/міс</div><div class="save">вигода $168</div></div>
+<!-- plan popup -->
+<div class="modal" id="planModal" role="dialog" aria-modal="true" aria-labelledby="planTitle" hidden>
+  <div class="modal__backdrop" data-close></div>
+  <div class="modal__panel">
+    <i class="modal__glow"></i>
+    <header class="modal__head"><small class="eyebrow">8nID PRO</small><button class="modal__close" type="button" data-close data-ta="close" aria-label="Закрити"></button></header>
+    <h3 class="modal__title" id="planTitle" data-t="planDialogTitle">Обери тариф</h3>
+    <div class="chips" id="tierChips" role="radiogroup"></div>
+    <div class="chips chips--terms" id="termChips" role="radiogroup"></div>
+    <div class="modal__plan">
+      <div><span id="planName">Pro</span><small id="planMeta">100 профілів · 1 місяць</small></div>
+      <div class="modal__sum"><s id="planFull" hidden></s><b>$<span id="planPrice">39</span></b><small id="planMo"></small></div>
+    </div>
+    <ol class="modal__steps">
+      <li><em>01</em><span data-t="payStep1">Увійди в кабінет (той самий акаунт, що й у застосунку).</span></li>
+      <li><em>02</em><span data-t="payStep2">Отримаєш рахунок із точною сумою в USDT — TRON (TRC20) або BSC (BEP20).</span></li>
+      <li><em>03</em><span data-t="payStep3">Оплата зараховується автоматично за кілька хвилин після переказу.</span></li>
+    </ol>
+    <a class="btn btn--primary btn--block" id="planGo" href="account.html"><span data-t="planCta">Оформити в кабінеті</span></a>
+    <p class="modal__note"><span data-t="payAppToo">Або оформи в застосунку: «Мій акаунт» → «Тарифи».</span> <a href="#start" data-close data-t="noAppYet">Ще немає застосунку?</a></p>
   </div>
-  <p class="pricing-note">Почни з <b>2 днів безкоштовно</b> — підписку оформиш прямо в застосунку.</p>
-</div></section>
+</div>
 
-<section class="cta" id="download"><div class="wrap">
-  <div class="cta-box">
-    <h2>Спробуй 8nID Anty безкоштовно</h2>
-    <p>Завантаж, зареєструйся й отримай 2 дні повного доступу. Без картки.</p>
-    <a class="btn btn-primary btn-lg dl" href="https://github.com/88n77/8nid-anty-pro/releases/latest">⬇ Завантажити для Windows</a>
-    <div class="note" style="margin-top:18px;color:var(--dim);font-size:13px">Windows 10/11 · 64-bit · <span id="dl-ver"></span></div>
+<!-- screenshot viewer -->
+<div class="modal modal--shot" id="shotModal" role="dialog" aria-modal="true" aria-labelledby="shotTitle" hidden>
+  <div class="modal__backdrop" data-close></div>
+  <div class="modal__panel">
+    <header class="modal__head"><h3 class="shot__title" id="shotTitle" data-t="shotTitle">Інтерфейс 8nID Anty Pro</h3><button class="modal__close" type="button" data-close data-ta="close" aria-label="Закрити"></button></header>
+    <img class="shot__img" src="assets/img/app-ui.webp" srcset="assets/img/app-ui-sm.webp 960w, assets/img/app-ui.webp 1600w" sizes="(max-width: 1000px) 100vw, 1200px" width="1600" height="900" alt="" data-talt="monitorAlt" loading="lazy">
+    <p class="fineprint shot__note" data-t="shotNote">Справжній інтерфейс менеджера профілів. Дані демонстраційні.</p>
   </div>
-</div></section>
+</div>
 
-<footer><div class="wrap">
-  <span>© 2026 8nID Anty · Power by 88n77</span>
-  <span><a href="#pricing">Тарифи</a> &nbsp;·&nbsp; <a href="https://t.me/n88n77" target="_blank">Підтримка</a></span>
-</div></footer>
+<main>
 
-<script>
-// Динамічне посилання на останній інсталятор з GitHub Releases
-(async () => {
-  try {
-    const r = await fetch('https://api.github.com/repos/88n77/8nid-anty-pro/releases/latest');
-    const j = await r.json();
-    const exe = (j.assets || []).find(a => a.name.endsWith('.exe'));
-    if (exe) document.querySelectorAll('a.dl').forEach(a => { if (a.getAttribute('href') === '#download') return; a.href = exe.browser_download_url; });
-    const vEl = document.getElementById('dl-ver'); if (vEl && j.tag_name) vEl.textContent = j.tag_name;
-  } catch (_) { /* лишаємо посилання на сторінку релізів */ }
-})();
-</script>
+<!-- ================= HERO ================= -->
+<section class="hero" id="hero">
+  <div class="wrap hero__in">
+    <div class="hero-copy">
+      <h1 class="hero-title"><span class="hero-title__brand">8nID</span> ANTIDETECT<br>BROWSER</h1>
+      <p class="hero-desc" data-t="heroDescription">Антидетект-браузер для тих, хто працює з акаунтами. Індивідуальний відбиток, проксі та сесія для кожного профілю. Усе під твоїм контролем.</p>
+      <div class="hero-actions">
+        <a class="btn btn--primary btn--hero" href="#start"><span data-t="heroCta">Почати безкоштовно</span></a>
+        <p class="note"><span data-t="trialNote2">Free назавжди · 5 профілів<br>без банківської картки</span><small class="platform">Windows 10 / 11 · 64-bit</small></p>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-print" aria-hidden="true">
+        <picture>
+          <source media="(max-width: 900px)" srcset="assets/img/hero-bg-sm.webp" type="image/webp">
+          <img src="assets/img/hero-bg.webp" alt="" width="2700" height="1500" fetchpriority="high" decoding="async">
+        </picture>
+      </div>
+      <button class="shot-open" type="button" id="shotOpen" aria-haspopup="dialog" aria-controls="shotModal">
+        <span class="appwin">
+          <img src="assets/img/app-ui.webp" srcset="assets/img/app-ui-sm.webp 960w, assets/img/app-ui.webp 1600w" sizes="(max-width: 1100px) 92vw, 60vw" alt="" data-talt="monitorAlt" width="1600" height="900" fetchpriority="high" decoding="async">
+        </span>
+        <span class="shot-open__label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg><span data-t="realInterface">Переглянути реальний інтерфейс</span></span>
+      </button>
+      <div class="glass glass--hero" aria-hidden="true">
+        <div class="glass__in">
+          <svg class="ring" viewBox="0 0 80 80"><circle cx="40" cy="40" r="34"/><circle cx="40" cy="40" r="22"/></svg>
+          <div>
+            <small data-t="fingerprint">Відбиток профілю</small>
+            <strong data-t="fingerprintTitle">Окреме середовище</strong>
+            <span>Canvas · WebGL · Audio · WebRTC</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="props">
+      <div class="props__item"><b>Chromium</b><span data-t="factCore">власне ядро</span></div>
+      <div class="props__item"><b data-t="factLocalTitle">Локально</b><span data-t="factLocal">профілі та куки</span></div>
+      <div class="props__item"><b>5 → ∞</b><span data-t="factUnlimited">профілів: від Free до Pro Max</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ОСНОВА ================= -->
+<section class="sec" id="osnova">
+  <i class="glow" style="--gx:70%;--gy:10%"></i>
+  <div class="wrap">
+    <div class="sec__head">
+      <h2 class="title" data-anim data-t="whyTitle">Незалежність<br>у кожному профілі.</h2>
+      <p class="lead" data-anim style="--d:1" data-t="whyDescription">Три принципи, на яких побудований твій робочий простір.</p>
+    </div>
+    <div class="cards3">
+      <article class="card" data-anim style="--d:1">
+        <header><b>01</b><span>8nID Core</span></header>
+        <svg class="sym" viewBox="0 0 56 56"><circle cx="28" cy="28" r="25"/><circle cx="28" cy="28" r="16"/><circle cx="28" cy="28" r="7" class="f"/></svg>
+        <h3 data-t="why1Title">Власне ядро</h3>
+        <p data-t="why1Body">Форк Chromium із налаштуванням відбитка на рівні браузера. Canvas, WebGL, аудіо, шрифти й параметри екрана для кожного профілю.</p>
+      </article>
+      <article class="card" data-anim style="--d:2">
+        <header><b>02</b><span>Local first</span></header>
+        <svg class="sym" viewBox="0 0 56 56"><rect x="4" y="4" width="48" height="48"/><rect x="18" y="18" width="20" height="20" class="f"/></svg>
+        <h3 data-t="why2Title">Дані локально залишаються в тебе</h3>
+        <p data-t="why2Body">Профілі, куки й налаштування проксі зберігаються на твоєму ПК. Для перенесення та відновлення є експорт і резервні копії.</p>
+      </article>
+      <article class="card" data-anim style="--d:3">
+        <header><b>03</b><span data-t="why3Foot">Плати за масштаб</span></header>
+        <svg class="sym sym--wide" viewBox="0 0 24 24"><path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z"/></svg>
+        <h3 data-t="why3Title">Ростеш — переходиш вище</h3>
+        <p data-t="why3Body">Усі функції в кожному платному тарифі. Різниця лише в кількості профілів: від 20 до безліміту. Перехід між тарифами — з перерахунком днів.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= МОЖЛИВОСТІ ================= -->
+<section class="sec" id="mozhlyvosti">
+  <i class="glow" style="--gx:85%;--gy:30%"></i>
+  <div class="wrap">
+    <div class="sec__head">
+      <h2 class="title" data-anim data-t="featuresTitle">Увесь процес.<br>В одному місці.</h2>
+      <p class="lead" data-anim style="--d:1" data-t="featuresDescription">Від першого профілю до масових операцій — без постійного перемикання між інструментами.</p>
+    </div>
+    <div class="feat">
+      <div class="feat__left" data-anim style="--d:1">
+        <div class="tabs" role="tablist" data-ta="featTabs" aria-label="Можливості">
+          <button class="tab is-active" role="tab" id="tab0" aria-controls="pane0" aria-selected="true" tabindex="0" data-tab="0" data-t="tabProfiles">Профілі</button>
+          <button class="tab" role="tab" id="tab1" aria-controls="pane1" aria-selected="false" tabindex="-1" data-tab="1" data-t="tabFingerprint">Відбиток і проксі</button>
+          <button class="tab" role="tab" id="tab2" aria-controls="pane2" aria-selected="false" tabindex="-1" data-tab="2" data-t="tabSync">Синхронізація</button>
+          <button class="tab" role="tab" id="tab3" aria-controls="pane3" aria-selected="false" tabindex="-1" data-tab="3" data-t="tabData">Твої дані</button>
+        </div>
+        <div class="tabpanes">
+          <div class="pane is-active" id="pane0" role="tabpanel" aria-labelledby="tab0" tabindex="0" data-pane="0">
+            <small class="eyebrow">Profile manager</small>
+            <h3 data-t="profilesTitle">Порядок навіть у сотнях профілів.</h3>
+            <p data-t="profilesBody">Створюй профілі по одному або пачкою. Розкладай за групами, знаходь через пошук і фільтри, запускай вибрані одним рухом.</p>
+            <ul class="list"><li data-t="profilesPoint1">Масове створення з окремими відбитками</li><li data-t="profilesPoint2">Групи, пошук і фільтри стану</li><li data-t="profilesPoint3">Запуск і зупинка вибраних профілів</li></ul>
+          </div>
+          <div class="pane" id="pane1" role="tabpanel" aria-labelledby="tab1" tabindex="0" data-pane="1" hidden>
+            <small class="eyebrow">Fingerprint &amp; proxy</small>
+            <h3 data-t="fpTitle">Узгоджене середовище для кожної сесії.</h3>
+            <p data-t="fpBody">Налаштовуй відбиток, підключай проксі й перевіряй параметри перед роботою. Мова та часова зона підлаштовуються під геолокацію проксі.</p>
+            <ul class="list"><li data-t="fpPoint1">HTTP, HTTPS та SOCKS5 із перевіркою</li><li data-t="fpPoint2">Canvas, WebGL, Audio, шрифти й екран</li><li data-t="fpPoint3">Перевірка відбитка та налаштування WebRTC</li></ul>
+          </div>
+          <div class="pane" id="pane2" role="tabpanel" aria-labelledby="tab2" tabindex="0" data-pane="2" hidden>
+            <small class="eyebrow">Window synchronizer</small>
+            <h3 data-t="syncTitle">Одна дія. Кілька вікон.</h3>
+            <p data-t="syncBody">Синхронізуй роботу запущених профілів: відкривай адресу, вводь текст, оновлюй вкладки та дублюй дії з головного вікна.</p>
+            <ul class="list"><li data-t="syncPoint1">Синхронізація миші та клавіатури</li><li data-t="syncPoint2">Відкриття URL і нових вкладок пачкою</li><li data-t="syncPoint3">Розміщення вікон сіткою</li></ul>
+          </div>
+          <div class="pane" id="pane3" role="tabpanel" aria-labelledby="tab3" tabindex="0" data-pane="3" hidden>
+            <small class="eyebrow">Local storage</small>
+            <h3 data-t="dataTitle">Твоя робота залишається твоєю.</h3>
+            <p data-t="dataBody">Контролюй дані профілів і збережені сесії. Переноси потрібне через імпорт та експорт і роби резервні копії перед змінами.</p>
+            <ul class="list"><li data-t="dataPoint1">Локальне зберігання профілів і кук</li><li data-t="dataPoint2">Імпорт та експорт профілів</li><li data-t="dataPoint3">Резервне копіювання робочих даних</li></ul>
+          </div>
+        </div>
+      </div>
+      <div class="panel" data-anim style="--d:2" aria-hidden="false">
+        <div class="vis is-active" data-vis="0">
+          <div class="panel__head"><small>Profile manager / real UI</small><svg viewBox="0 0 24 24"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg></div>
+          <img class="realshot" src="assets/img/feat-profiles.webp" width="1330" height="394" loading="lazy" decoding="async" alt="" data-talt="featShotAlt">
+          <p class="fineprint" data-t="featShotNote">Папки з лічильниками, пошук і фільтри за ядром, проксі та станом — так виглядає таблиця в застосунку (демо-дані).</p>
+        </div>
+        <div class="vis" data-vis="1">
+          <div class="panel__head"><small>Profile / environment</small><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg></div>
+          <dl class="kv">
+            <div><dt>Browser engine</dt><dd>8nID Core</dd></div>
+            <div><dt>Canvas / WebGL</dt><dd data-t="visualIsolated">Окремий відбиток</dd></div>
+            <div><dt>Timezone / Language</dt><dd data-t="visualMatched">За проксі</dd></div>
+            <div><dt>WebRTC</dt><dd data-t="visualConfigured">Налаштовується</dd></div>
+            <div><dt>Proxy</dt><dd><i class="live"></i><span data-t="proxyChecked">Перевірено</span></dd></div>
+          </dl>
+        </div>
+        <div class="vis" data-vis="2">
+          <div class="panel__head"><small>Sync / multi-window</small><svg viewBox="0 0 24 24"><path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/></svg></div>
+          <div class="sync">
+            <div class="sync__main"><b>01</b><span data-t="visualMain">Головне вікно</span></div>
+            <svg class="sync__lines" viewBox="0 0 620 60" preserveAspectRatio="none"><path d="M310 0V30M103 60V30H517V60M310 30V60"/></svg>
+            <div class="sync__row"><div><b>02</b><span>Work</span></div><div><b>03</b><span>Social</span></div><div><b>04</b><span>Web3</span></div></div>
+          </div>
+        </div>
+        <div class="vis" data-vis="3">
+          <div class="panel__head"><small>Storage / your device</small><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="1"/><path d="M8 21h8"/><path d="M12 17v4"/></svg></div>
+          <div class="device">
+            <svg class="device__icon" viewBox="0 0 56 56"><rect x="4" y="4" width="48" height="48"/><rect x="18" y="18" width="20" height="20" class="f"/></svg>
+            <strong data-t="visualDevice">Твій комп’ютер</strong>
+            <div class="tags"><span data-t="tabProfiles">Профілі</span><span>Cookies</span><span>Proxy</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ДЛЯ РОБОТИ ================= -->
+<section class="sec" id="robota">
+  <i class="glow" style="--gx:20%;--gy:60%"></i>
+  <div class="wrap">
+    <div class="sec__head">
+      <h2 class="title" data-anim data-t="workflowTitle">Різні завдання.<br>Єдиний простір.</h2>
+      <p class="lead" data-anim style="--d:1" data-t="workflowDescription">Відділяй робочі контексти, зберігай сесії та прибирай повторювані кроки.</p>
+    </div>
+    <div class="strip">
+      <article data-anim style="--d:1">
+        <header><svg viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg><span>01 / Work</span></header>
+        <h3 data-t="workTitle">Робота з акаунтами</h3>
+        <p data-t="workBody">Окремі профілі для проєктів, клієнтів і робочих сесій. Групи та проксі допомагають тримати все впорядкованим.</p>
+      </article>
+      <article data-anim style="--d:2">
+        <header><svg viewBox="0 0 24 24"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg><span>02 / Social</span></header>
+        <h3 data-t="socialTitle">Маркетинг і соцмережі</h3>
+        <p data-t="socialBody">Розділяй акаунти та рекламні кабінети. Переходь між профілями зі збереженими куками, без постійного повторного входу.</p>
+      </article>
+      <article data-anim style="--d:3">
+        <header><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>03 / Web3</span></header>
+        <h3 data-t="web3Title">Крипто та Web3</h3>
+        <p data-t="web3Body">Організуй різні Web3-середовища за групами. Для повторюваних дій використовуй масовий запуск і синхронізацію вікон.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ТАРИФИ ================= -->
+<section class="sec" id="taryfy">
+  <i class="glow" style="--gx:40%;--gy:55%"></i>
+  <div class="wrap">
+    <div class="sec__head sec__head--split">
+      <h2 class="title" data-anim data-t="pricingTitle">Плати за профілі,<br>не за функції.</h2>
+      <div class="pricing-side" data-anim style="--d:1">
+        <p class="lead" data-t="pricingDescription">Усі функції в кожному платному тарифі — різниця лише в кількості профілів. Free лишається з тобою назавжди.</p>
+        <p class="pay"><b>USDT</b> TRC20 / BEP20</p>
+      </div>
+    </div>
+    <div class="termbar" id="termBar" role="radiogroup" data-ta="termPick" aria-label="Термін оплати" data-anim style="--d:1"></div>
+    <div class="plans" id="plans">
+      <article class="plan" data-anim style="--d:1" data-tier="free">
+        <header><span>Free</span></header>
+        <p class="plan__prof" data-t="free5">5 профілів</p>
+        <div class="price">$0</div>
+        <p class="plan__total" data-t="foreverNoCard">Назавжди · без картки</p>
+        <ul class="checks"><li data-t="freeCreate">Створення профілів</li><li data-t="freeLaunch">Запуск профілів</li><li class="no" data-t="freeNoMore">Інші функції — на платних тарифах</li></ul>
+        <a class="btn btn--ghost" href="#start"><span data-t="navDownload">Завантажити</span></a>
+      </article>
+      <article class="plan" data-anim style="--d:2" data-tier="p20">
+        <header><span class="tname">Pro 20</span></header>
+        <p class="plan__prof tprof">20 профілів</p>
+        <div class="price">$<span class="tprice">12</span><small class="per" data-t="perMonthShort">/ міс.</small></div>
+        <p class="plan__total ttotal"></p>
+        <ul class="checks"><li class="tsync" data-t="planSync">Синхронізація вікон</li><li data-t="planApi">Локальний API</li><li data-t="planTrash">Відновлення з кошика</li></ul>
+        <button class="btn btn--ghost" type="button" data-plan="p20"><span data-t="choosePlan">Обрати план</span></button>
+      </article>
+      <article class="plan plan--rec" data-anim style="--d:3" data-tier="p100">
+        <header><span class="tname">Pro</span><em data-t="recommended">Рекомендуємо</em></header>
+        <p class="plan__prof tprof">100 профілів</p>
+        <div class="price">$<span class="tprice">39</span><small class="per" data-t="perMonthShort">/ міс.</small></div>
+        <p class="plan__total ttotal"></p>
+        <ul class="checks"><li class="tsync" data-t="planSync">Синхронізація вікон</li><li data-t="planApi">Локальний API</li><li data-t="planTrash">Відновлення з кошика</li></ul>
+        <button class="btn btn--primary" type="button" data-plan="p100"><span data-t="choosePlan">Обрати план</span></button>
+      </article>
+      <article class="plan" data-anim style="--d:4" data-tier="pmax">
+        <header><span class="tname">Pro Max</span></header>
+        <p class="plan__prof tprof">Безліміт профілів</p>
+        <div class="price">$<span class="tprice">299</span><small class="per" data-t="perMonthShort">/ міс.</small></div>
+        <p class="plan__total ttotal"></p>
+        <ul class="checks"><li class="tsync" data-t="planSync">Синхронізація вікон</li><li data-t="planApi">Локальний API</li><li data-t="planTrash">Відновлення з кошика</li></ul>
+        <button class="btn btn--ghost" type="button" data-plan="pmax"><span data-t="choosePlan">Обрати план</span></button>
+      </article>
+    </div>
+    <div class="pricing-foot" data-anim style="--d:2">
+      <button class="btn btn--ghost btn--sm" type="button" data-plan="p50"><span data-t="allPlans">Усі тарифи</span></button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ПОЧНИ ЗАРАЗ ================= -->
+<section class="sec" id="start">
+  <i class="glow" style="--gx:75%;--gy:20%"></i>
+  <div class="wrap start">
+    <div class="start__left">
+      <h2 class="title" data-anim data-t="downloadTitle">Твій наступний профіль<br>починається тут.</h2>
+      <p class="lead" data-anim style="--d:1" data-t="downloadBody">Завантаж 8nID Anty Pro, створи акаунт і перевір браузер у власному робочому процесі.</p>
+      <div class="dl" data-anim style="--d:2">
+        <a class="btn btn--primary btn--dl dl-link" href="https://github.com/88n77/8nid-anty-pro/releases/latest" target="_blank" rel="noopener noreferrer"><svg class="win" viewBox="0 0 24 24"><path d="M3 5l8-1v8H3zm10-1 8-1v9h-8zM3 14h8v8l-8-1zm10 0h8v9l-8-1z"/></svg><span data-t="downloadButton">Завантажити для Windows</span></a>
+        <p class="req">Windows 10 / 11 · 64-bit · <span class="release-version" data-t="latestRelease">Останній реліз</span> · <a class="releases" href="https://github.com/88n77/8nid-anty-pro/releases" target="_blank" rel="noopener noreferrer" data-t="allReleases">Усі релізи</a></p>
+      </div>
+      <div class="refbox" id="refBox" data-anim hidden>
+        <small data-t="refLabel">Тебе запросили</small>
+        <div class="refbox__row"><code id="refCode"></code><button class="btn btn--ghost btn--sm" type="button" id="refCopy"><span data-t="copy">Копіювати</span></button></div>
+        <p data-t="refHint">Введи цей код при реєстрації в застосунку — отримаєш −10% на першу оплату.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="glass" data-anim style="--d:1"><div class="glass__in glass__in--step"><b>01</b><div><strong data-t="step1Title">Встанови браузер</strong><span data-t="step1Body">Завантаж інсталятор для Windows і відкрий 8nID Anty Pro.</span></div></div></li>
+      <li class="glass" data-anim style="--d:2"><div class="glass__in glass__in--step"><b>02</b><div><strong data-t="step2Title">Створи акаунт</strong><span data-t="step2Body">Зареєструйся через email у застосунку. Free: 5 профілів назавжди, без картки.</span></div></div></li>
+      <li class="glass" data-anim style="--d:3"><div class="glass__in glass__in--step"><b>03</b><div><strong data-t="step3Title">Налаштуй профіль</strong><span data-t="step3Body">Додай проксі, перевір відбиток і починай роботу у своєму окремому середовищі.</span></div></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="sec" id="faq">
+  <div class="wrap faqw">
+    <div class="support">
+      <h2 class="title" data-anim data-t="faqTitle">Є питання?</h2>
+      <p class="lead" data-anim style="--d:1" data-t="faqBody">Ось що варто знати перед першим запуском.</p>
+      <a class="btn btn--ghost btn--support" href="https://t.me/a8nID_support" target="_blank" rel="noopener noreferrer" data-anim style="--d:2"><span data-t="supportLink">Написати в підтримку</span><svg viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+    </div>
+    <div class="faq">
+      <div class="qa" data-anim><button aria-expanded="false"><em>01</em><span data-t="faq1q">Що входить у Free?</span><i></i></button><div class="qa__a"><p data-t="faq1a">5 профілів назавжди після реєстрації в застосунку — без картки й без терміну. На Free можна лише створювати й запускати профілі; решта функцій — на платних тарифах, синхронізація вікон — від Pro 50.</p></div></div>
+      <div class="qa" data-anim style="--d:1"><button aria-expanded="false"><em>02</em><span data-t="faq2q">Де зберігаються мої профілі?</span><i></i></button><div class="qa__a"><p data-t="faq2a">Профілі, куки та налаштування проксі зберігаються локально на твоєму комп’ютері. Авторизація й перевірка підписки використовують сервер. Для перенесення даних використовуй експорт і резервні копії.</p></div></div>
+      <div class="qa" data-anim style="--d:2"><button aria-expanded="false"><em>03</em><span data-t="faq3q">Як оплатити підписку?</span><i></i></button><div class="qa__a"><p data-t="faq3a">У кабінеті на сайті або в застосунку обери тариф і термін. Ти отримаєш рахунок із точною сумою в USDT (TRON TRC20 або BSC BEP20) — оплата зараховується автоматично.</p></div></div>
+      <div class="qa" data-anim style="--d:3"><button aria-expanded="false"><em>04</em><span data-t="faq7q">Як працює запрошення друга?</span><i></i></button><div class="qa__a"><p data-t="faq7a">У кабінеті є твій код запрошення. Друг вводить його при реєстрації й отримує −10% на першу оплату, а тобі додається 10 днів до тарифу, щойно він оплатить.</p></div></div>
+      <div class="qa" data-anim style="--d:4"><button aria-expanded="false"><em>05</em><span data-t="faq4q">Чи є версія для macOS або Linux?</span><i></i></button><div class="qa__a"><p data-t="faq4a">Наразі інсталятор доступний для Windows 10 і 11, 64-bit. Версії для macOS та Linux уже в роботі й скоро вийдуть.</p></div></div>
+      <div class="qa" data-anim style="--d:5"><button aria-expanded="false"><em>06</em><span data-t="faq5q">Чи гарантує браузер відсутність блокувань?</span><i></i></button><div class="qa__a"><p data-t="faq5a">Ні. Окреме середовище та налаштування відбитка не гарантують результат на будь-якому сервісі. Він також залежить від проксі, поведінки акаунта та правил платформи.</p></div></div>
+      <div class="qa" data-anim style="--d:6"><button aria-expanded="false"><em>07</em><span data-t="faq6q">Чи потрібні власні проксі?</span><i></i></button><div class="qa__a"><p data-t="faq6a">Для окремої IP-адреси профілю підключи власний проксі HTTP, HTTPS або SOCKS5. Проксі не включені у підписку. Перед запуском їх можна перевірити в менеджері.</p></div></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__in">
+    <div class="footer__brand">
+      <a class="logo logo--full" href="#hero"><img class="logo__mark" src="assets/img/logo-64.webp" srcset="assets/img/logo-64.webp 1x, assets/img/logo-128.webp 2x" alt="" width="34" height="34"><span>8nID <b>Anty</b></span><em class="pro">PRO</em></a>
+      <p class="footer__slogan" data-t="footerTagline">Твій простір для задач</p>
+    </div>
+    <nav class="footer__links">
+      <a href="#mozhlyvosti" data-t="navFeatures">Можливості</a>
+      <a href="#taryfy" data-t="navPricing">Тарифи</a>
+      <a href="account.html" data-t="navCabinet">Кабінет</a>
+      <a href="https://t.me/a8nID_support" target="_blank" rel="noopener noreferrer" data-t="support">Підтримка</a>
+    </nav>
+    <nav class="footer__links footer__legal">
+      <a href="terms.html" data-t="legalTerms">Умови використання</a>
+      <a href="privacy.html" data-t="legalPrivacy">Політика конфіденційності</a>
+      <a href="rules.html" data-t="legalRules">Правила та порушення</a>
+    </nav>
+    <hr>
+    <small>© <span id="year">2026</span> 8nID Anty Pro</small>
+    <small>Power by <a href="https://t.me/n88n77" target="_blank" rel="noopener noreferrer">88n77</a></small>
+  </div>
+</footer>
+
+<script src="assets/js/i18n.js?v=20261009m" defer></script>
+<script src="assets/js/site.js?v=20261009m" defer></script>
 </body>
 </html>

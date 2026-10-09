@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Кабінет — 8nID Anty Pro</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#000000">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="stylesheet" href="assets/css/site.css?v=20261009m">
+<link rel="stylesheet" href="assets/css/account.css?v=20261009m">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body data-page="account">
+
+<header class="top is-stuck" id="top">
+  <div class="wrap top__in">
+    <a class="logo logo--full" href="index.html"><img class="logo__mark" src="assets/img/logo-64.webp" srcset="assets/img/logo-64.webp 1x, assets/img/logo-128.webp 2x" alt="" width="34" height="34"><span>8nID <b>Anty</b></span><em class="pro">PRO</em></a>
+    <div class="top__right">
+      <div class="langsel" id="langsel">
+        <button class="lang" id="langBtn" type="button" aria-haspopup="listbox" aria-expanded="false" data-ta="language" aria-label="Мова"><span id="langCode">UA</span></button>
+        <ul class="langsel__list" role="listbox" id="langList">
+          <li><button type="button" role="option" data-lang="uk"><b>UA</b>Українська</button></li>
+          <li><button type="button" role="option" data-lang="en"><b>EN</b>English</button></li>
+          <li><button type="button" role="option" data-lang="pl"><b>PL</b>Polski</button></li>
+          <li><button type="button" role="option" data-lang="ru"><b>RU</b>Русский</button></li>
+          <li><button type="button" role="option" data-lang="fr"><b>FR</b>Français</button></li>
+          <li><button type="button" role="option" data-lang="pt"><b>PT</b>Português</button></li>
+          <li><button type="button" role="option" data-lang="tr"><b>TR</b>Türkçe</button></li>
+        </ul>
+      </div>
+      <a class="btn btn--ghost btn--sm" href="index.html"><span data-t="toSite">На сайт</span></a>
+      <button class="btn btn--ghost btn--sm" type="button" id="logoutBtn" hidden><span data-t="logout">Вийти</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="cab">
+  <div class="wrap">
+
+    <!-- ===== sign in ===== -->
+    <section class="auth" id="vLogin" hidden>
+      <h1 class="title" data-t="cabTitle">Кабінет</h1>
+      <p class="lead" data-t="cabLead">Той самий акаунт, що й у застосунку 8nID Anty Pro.</p>
+      <form class="auth__form" id="fLogin" novalidate>
+        <div class="field"><label for="lEmail" data-t="email">Пошта</label><input class="input" id="lEmail" type="email" autocomplete="username" required></div>
+        <div class="field"><label for="lPass" data-t="password">Пароль</label><input class="input" id="lPass" type="password" autocomplete="current-password" required></div>
+        <div class="msg msg--err" id="lErr" hidden></div>
+        <button class="btn btn--primary btn--block" type="submit"><span data-t="signIn">Увійти</span></button>
+        <div class="auth__links"><button class="linkbtn" type="button" data-view="vReset" data-t="forgot">Забули пароль?</button></div>
+      </form>
+      <p class="auth__note"><span data-t="noAccount">Немає акаунта? Реєстрація — у застосунку.</span> <a class="linkbtn" href="index.html#start" data-t="navDownload">Завантажити</a></p>
+    </section>
+
+    <!-- ===== verify e-mail ===== -->
+    <section class="auth" id="vVerify" hidden>
+      <h1 class="title" data-t="verifyTitle">Підтверди пошту</h1>
+      <p class="lead"><span data-t="verifyLead">Ми надіслали 6-значний код на</span> <b id="vEmail"></b></p>
+      <form class="auth__form" id="fVerify" novalidate>
+        <div class="field"><label for="vCode" data-t="code">Код</label><input class="input input--code" id="vCode" inputmode="numeric" autocomplete="one-time-code" maxlength="6" required></div>
+        <div class="msg" id="vMsg" hidden></div>
+        <button class="btn btn--primary btn--block" type="submit"><span data-t="confirm">Підтвердити</span></button>
+        <div class="auth__links"><button class="linkbtn" type="button" id="vResend" data-t="resend">Надіслати код ще раз</button><button class="linkbtn" type="button" data-view="vLogin" data-t="back">Назад</button></div>
+      </form>
+    </section>
+
+    <!-- ===== reset password ===== -->
+    <section class="auth" id="vReset" hidden>
+      <h1 class="title" data-t="resetTitle">Новий пароль</h1>
+      <p class="lead" data-t="resetLead">Введи пошту — надішлемо код для зміни пароля.</p>
+      <form class="auth__form" id="fReset1" novalidate>
+        <div class="field"><label for="rEmail" data-t="email">Пошта</label><input class="input" id="rEmail" type="email" autocomplete="username" required></div>
+        <button class="btn btn--primary btn--block" type="submit"><span data-t="sendCode">Надіслати код</span></button>
+      </form>
+      <form class="auth__form" id="fReset2" novalidate hidden>
+        <div class="field"><label for="rCode" data-t="code">Код</label><input class="input input--code" id="rCode" inputmode="numeric" autocomplete="one-time-code" maxlength="6" required></div>
+        <div class="field"><label for="rPass" data-t="newPassword">Новий пароль</label><input class="input" id="rPass" type="password" autocomplete="new-password" minlength="8" required></div>
+        <button class="btn btn--primary btn--block" type="submit"><span data-t="savePassword">Зберегти пароль</span></button>
+      </form>
+      <div class="msg" id="rMsg" hidden></div>
+      <div class="auth__links"><button class="linkbtn" type="button" data-view="vLogin" data-t="back">Назад</button></div>
+    </section>
+
+    <!-- ===== dashboard ===== -->
+    <section class="dash" id="vDash" hidden>
+      <div class="dash__head">
+        <div>
+          <h1 class="title" data-t="cabTitle">Кабінет</h1>
+          <p class="lead" id="dEmail"></p>
+        </div>
+      </div>
+
+      <div class="dgrid">
+        <!-- subscription -->
+        <article class="box box--sub" id="bSub">
+          <header class="box__head"><small data-t="subscription">Підписка</small><span class="pill" id="sState"></span></header>
+          <div class="sub__tier"><b id="sTier">—</b><span id="sProfiles"></span></div>
+          <p class="sub__until" id="sUntil"></p>
+          <div class="bar"><i id="sBar"></i></div>
+          <p class="fineprint" id="sNote"></p>
+          <button class="btn btn--primary" type="button" id="sBuy"><span data-t="buyOrExtend">Продовжити або змінити тариф</span></button>
+        </article>
+
+        <!-- device -->
+        <article class="box" id="bDev">
+          <header class="box__head"><small data-t="device">Пристрій</small></header>
+          <div class="dev" id="devInfo"></div>
+          <p class="fineprint" data-t="deviceNote">1 акаунт = 1 ПК. Якщо ПК втрачено або перевстановлено — відв’яжи його й увійди в застосунок на новому.</p>
+          <button class="btn btn--danger btn--sm" type="button" id="devRelease"><span data-t="releasePc">Відв’язати ПК</span></button>
+          <div class="msg" id="devMsg" hidden></div>
+        </article>
+
+        <!-- buy -->
+        <article class="box box--wide" id="bBuy" hidden>
+          <header class="box__head"><small data-t="choosePlanTitle">Тариф і термін</small><button class="modal__close box__close" type="button" id="buyClose" data-ta="close" aria-label="Закрити"></button></header>
+          <div class="buy">
+            <div class="buy__pick">
+              <div class="chips" id="bTiers" role="radiogroup"></div>
+              <div class="chips chips--terms" id="bTerms" role="radiogroup"></div>
+              <div class="promo">
+                <input class="input" id="bPromo" data-tp="promoPh" placeholder="Промокод" autocomplete="off" maxlength="32">
+                <button class="btn btn--ghost btn--sm" type="button" id="bPromoApply"><span data-t="apply">Застосувати</span></button>
+              </div>
+              <div class="msg msg--err" id="bErr" hidden></div>
+            </div>
+            <div class="buy__sum">
+              <div class="sum__name" id="qName"></div>
+              <div class="sum__price"><s id="qFull" hidden></s><b id="qPrice">—</b></div>
+              <div class="sum__disc" id="qDisc" hidden></div>
+              <ul class="sum__rows" id="qRows"></ul>
+              <div class="msg" id="qWarn" hidden></div>
+              <button class="btn btn--primary btn--block" type="button" id="bInvoice"><span data-t="getInvoice">Отримати рахунок</span></button>
+              <p class="fineprint"><span data-t="agreeTerms">Оплачуючи, ти приймаєш</span> <a class="linkbtn" href="terms.html" target="_blank" data-t="termsShort">Умови</a> <span data-t="and">і</span> <a class="linkbtn" href="rules.html" target="_blank" data-t="rulesShort">Правила</a>.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- pay -->
+        <article class="box box--wide" id="bPay" hidden>
+          <header class="box__head"><small data-t="invoice">Рахунок</small><span class="pill pill--wait" id="pStatus"></span></header>
+          <div class="pay">
+            <div class="pay__main">
+              <div class="pay__what" id="pWhat"></div>
+              <div class="nets" id="pNets" role="tablist"></div>
+              <div class="pay__row">
+                <small data-t="sendExactly">Надішли рівно</small>
+                <div class="copyline"><b class="pay__amount" id="pAmount"></b><span class="pay__coin">USDT</span><button class="btn btn--ghost btn--sm" type="button" data-copy="pAmount"><span data-t="copy">Копіювати</span></button></div>
+              </div>
+              <div class="pay__row">
+                <small data-t="toAddress">На адресу</small>
+                <div class="copyline"><code class="pay__addr" id="pAddr"></code><button class="btn btn--ghost btn--sm" type="button" data-copy="pAddr"><span data-t="copy">Копіювати</span></button></div>
+              </div>
+              <div class="msg"><span data-t="exactWarn">Сума до цента важлива — за нею ми впізнаємо твою оплату. Лише USDT і лише в обраній мережі:</span> <b id="pChain"></b>.</div>
+              <p class="fineprint"><span data-t="expiresIn">Рахунок дійсний ще</span> <b id="pTimer"></b>. <span data-t="autoCredit">Сторінку можна не оновлювати — статус перевіряється сам.</span></p>
+              <details class="hash">
+                <summary data-t="paidNoCredit">Оплатив, але не зараховано?</summary>
+                <p class="fineprint" data-t="hashLead">Встав хеш транзакції — перевіримо вручну по блокчейну.</p>
+                <div class="promo"><input class="input" id="pHash" data-tp="hashPh" placeholder="Хеш транзакції (TxID)" autocomplete="off"><button class="btn btn--ghost btn--sm" type="button" id="pVerify"><span data-t="check">Перевірити</span></button></div>
+                <div class="msg" id="pMsg" hidden></div>
+              </details>
+              <div class="pay__actions"><button class="linkbtn" type="button" id="pChange" data-t="changePlan">Змінити тариф</button></div>
+            </div>
+            <div class="pay__qr"><canvas id="pQr" width="220" height="220" aria-label="QR"></canvas><small data-t="scanQr">Скануй у гаманці</small></div>
+          </div>
+        </article>
+
+        <!-- paid ok -->
+        <article class="box box--wide box--ok" id="bPaid" hidden>
+          <header class="box__head"><small data-t="invoice">Рахунок</small><span class="pill pill--ok" data-t="paid">Оплачено</span></header>
+          <h3 data-t="paidTitle">Оплату зараховано</h3>
+          <p class="lead" id="paidText"></p>
+          <p class="fineprint" data-t="paidApp">Застосунок підхопить новий тариф сам за кілька хвилин (або натисни «Оновити» в «Мій акаунт»).</p>
+        </article>
+
+        <!-- referrals -->
+        <article class="box" id="bRef">
+          <header class="box__head"><small data-t="invite">Запрошення</small></header>
+          <p class="fineprint" id="refLead"></p>
+          <div class="copyline"><code class="refcode" id="refCode">—</code><button class="btn btn--ghost btn--sm" type="button" data-copy="refCode"><span data-t="copy">Копіювати</span></button></div>
+          <div class="copyline"><code class="reflink" id="refLink"></code><button class="btn btn--ghost btn--sm" type="button" data-copy="refLink"><span data-t="copyLink">Посилання</span></button></div>
+          <div class="stats">
+            <div><b id="refInv">0</b><span data-t="refInvited">запрошено</span></div>
+            <div><b id="refPaid">0</b><span data-t="refPaidN">оплатили</span></div>
+            <div><b id="refDays">0</b><span data-t="refDays">днів бонусу</span></div>
+          </div>
+          <div class="refin" id="refIn" hidden>
+            <small data-t="haveCode">Маєш код запрошення від друга?</small>
+            <div class="promo"><input class="input" id="refInput" data-tp="codePh" placeholder="Код" autocomplete="off" maxlength="16"><button class="btn btn--ghost btn--sm" type="button" id="refApply"><span data-t="apply">Застосувати</span></button></div>
+          </div>
+          <p class="fineprint" id="refBy" hidden></p>
+          <div class="msg" id="refMsg" hidden></div>
+        </article>
+
+        <!-- password -->
+        <article class="box" id="bPass">
+          <header class="box__head"><small data-t="security">Безпека</small></header>
+          <form class="auth__form auth__form--tight" id="fPass" novalidate>
+            <input class="input" type="email" autocomplete="username" id="pwUser" hidden>
+            <div class="field"><label for="pwOld" data-t="curPassword">Поточний пароль</label><input class="input" id="pwOld" type="password" autocomplete="current-password" required></div>
+            <div class="field"><label for="pwNew" data-t="newPassword">Новий пароль</label><input class="input" id="pwNew" type="password" autocomplete="new-password" minlength="8" required></div>
+            <p class="fineprint" data-t="passNote">Після зміни застосунок на ПК попросить увійти знову.</p>
+            <button class="btn btn--ghost btn--sm" type="submit"><span data-t="changePassword">Змінити пароль</span></button>
+            <div class="msg" id="pwMsg" hidden></div>
+          </form>
+        </article>
+
+        <!-- history -->
+        <article class="box box--wide" id="bHist">
+          <header class="box__head"><small data-t="payments">Оплати</small></header>
+          <div class="tablewrap"><table class="tbl" id="hTable">
+            <thead><tr><th data-t="date">Дата</th><th data-t="plan">Тариф</th><th data-t="term">Термін</th><th data-t="amount">Сума</th><th data-t="status">Статус</th><th>Tx</th></tr></thead>
+            <tbody></tbody>
+          </table></div>
+          <p class="fineprint" id="hEmpty" data-t="noPayments" hidden>Оплат ще не було.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="loading" id="vLoading"><i></i></div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__in">
+    <div class="footer__brand">
+      <a class="logo logo--full" href="index.html"><img class="logo__mark" src="assets/img/logo-64.webp" alt="" width="34" height="34"><span>8nID <b>Anty</b></span><em class="pro">PRO</em></a>
+    </div>
+    <nav class="footer__links">
+      <a href="index.html#taryfy" data-t="navPricing">Тарифи</a>
+      <a href="https://t.me/a8nID_support" target="_blank" rel="noopener noreferrer" data-t="support">Підтримка</a>
+    </nav>
+    <nav class="footer__links">
+      <a href="terms.html" data-t="legalTerms">Умови використання</a>
+      <a href="privacy.html" data-t="legalPrivacy">Політика конфіденційності</a>
+      <a href="rules.html" data-t="legalRules">Правила та порушення</a>
+    </nav>
+    <hr>
+    <small>© <span id="year">2026</span> 8nID Anty Pro</small>
+    <small>Power by <a href="https://t.me/n88n77" target="_blank" rel="noopener noreferrer">88n77</a></small>
+  </div>
+</footer>
+
+<script src="assets/js/i18n.js?v=20261009m" defer></script>
+<script src="assets/js/site.js?v=20261009m" defer></script>
+<script src="assets/js/vendor/qrcode.js?v=20261009m" defer></script>
+<script src="assets/js/account.js?v=20261009m" defer></script>
+</body>
+</html>
