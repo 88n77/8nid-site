@@ -6,6 +6,11 @@
 .auth__form--tight{margin-top:0;gap:14px}
 .auth__links{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .auth__note{color:var(--dim);font-size:14px;line-height:1.5}
+.authtabs{display:flex;gap:8px}
+.authtabs .chip{flex:1;justify-content:center}
+.check{display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.5;color:var(--gray);cursor:pointer}
+.check input{flex:none;width:20px;height:20px;margin:1px 0 0;accent-color:var(--o);cursor:pointer}
+.check .linkbtn{font-size:14px}
 
 .dash__head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:32px}
 .dash__head .title{font-size:clamp(32px,4vw,52px)}

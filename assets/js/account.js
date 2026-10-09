@@ -11,7 +11,7 @@
   const sel = { tier: 'p100', months: 1, promo: '' };
   const qs = new URLSearchParams(location.search);
   let wantBuy = qs.get('buy') ? { tier: qs.get('buy'), months: +qs.get('m') || 1 } : null;
-  let pendingEmail = '';
+  let pendingEmail = '', pendingPass = '';
 
   /* ---------------- api ---------------- */
   class ApiError extends Error { constructor(code, msg, status) { super(msg); this.code = code; this.status = status; } }
@@ -48,7 +48,7 @@
   const parseIso = iso => new Date(iso && !(iso.endsWith('Z') || /[+-]\d\d:\d\d$/.test(iso)) ? iso + 'Z' : iso);
 
   /* ---------------- views ---------------- */
-  const VIEWS = ['vLogin', 'vVerify', 'vReset', 'vDash', 'vLoading'];
+  const VIEWS = ['vLogin', 'vSignup', 'vVerify', 'vReset', 'vTerms', 'vDash', 'vLoading'];
   function show(id) {
     VIEWS.forEach(v => { $('#' + v).hidden = v !== id; });
     $('#logoutBtn').hidden = id !== 'vDash';
@@ -95,19 +95,41 @@
         await loadDash();
       } catch (er) {
         if (er.code === 'not_verified') {
-          pendingEmail = email; $('#vEmail').textContent = email;
+          pendingEmail = email; pendingPass = password; $('#vEmail').textContent = email;
           try { await api('/auth/resend-code', { email }); } catch (_) {}
           show('vVerify');
         } else msg('#lErr', errText(er), 'err');
       }
     });
   });
+  // invite code from ?ref= on the landing (saved by site.js)
+  const savedRef = S.ref(); if (savedRef) $('#sRef').value = savedRef;
+  $('#fSignup').addEventListener('submit', e => {
+    e.preventDefault();
+    const email = $('#sEmail').value.trim(), password = $('#sPass').value, ref = $('#sRef').value.trim().toUpperCase();
+    msg('#sErr', '');
+    if (!email || !password) { msg('#sErr', tr('err_fill'), 'err'); return; }
+    if (password.length < 8) { msg('#sErr', tr('err_weak_password'), 'err'); return; }
+    if (!$('#sTerms').checked) { msg('#sErr', tr('err_terms_required'), 'err'); return; }
+    busy($('#fSignup button[type=submit]'), async () => {
+      try {
+        await api('/auth/signup', { email, password, ref, accept_terms: true });
+        pendingEmail = email; pendingPass = password; $('#vEmail').textContent = email; $('#vCode').value = '';
+        msg('#vMsg', ''); show('vVerify');
+      } catch (er) { msg('#sErr', errText(er), 'err'); }
+    });
+  });
+
   $('#fVerify').addEventListener('submit', e => {
     e.preventDefault();
     const btn = $('#fVerify button[type=submit]');
     busy(btn, async () => {
       try {
         await api('/auth/verify-email', { email: pendingEmail, code: $('#vCode').value.trim() });
+        if (pendingPass) {
+          const j = await api('/web/login', { email: pendingEmail, password: pendingPass });
+          pendingPass = ''; setToken(j.token); await loadDash(); return;
+        }
         msg('#lErr', tr('verifiedSignIn'), 'ok'); show('vLogin'); $('#lEmail').value = pendingEmail;
         $('#lErr').hidden = false;
       } catch (er) { msg('#vMsg', errText(er), 'err'); }
@@ -140,6 +162,15 @@
     });
   });
 
+  $('#fTerms').addEventListener('submit', e => {
+    e.preventDefault();
+    if (!$('#tTerms').checked) { msg('#tErr', tr('err_terms_required'), 'err'); return; }
+    busy($('#fTerms button[type=submit]'), async () => {
+      try { await api('/web/accept-terms', { version: ov.terms.current }); await loadDash(); }
+      catch (er) { msg('#tErr', errText(er), 'err'); }
+    });
+  });
+
   /* ---------------- dashboard ---------------- */
   async function loadDash() {
     show('vLoading');
@@ -150,6 +181,7 @@
       show('vLogin'); msg('#lErr', errText(er), 'err'); return;
     }
     S.setPlans({ tiers: info.tiers, terms: info.terms, prices: info.prices, free: S.plans().free });
+    if (ov.terms && ov.terms.accepted !== ov.terms.current) { $('#tTerms').checked = false; msg('#tErr', ''); show('vTerms'); return; }
     show('vDash');
     renderDash();
     if (info.open_invoice) openPay(info.open_invoice);

@@ -9,8 +9,8 @@
 <meta name="referrer" content="no-referrer">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="assets/img/favicon-32.png" type="image/png" sizes="32x32">
-<link rel="stylesheet" href="assets/css/site.css?v=20261009m">
-<link rel="stylesheet" href="assets/css/account.css?v=20261009m">
+<link rel="stylesheet" href="assets/css/site.css?v=20261009n">
+<link rel="stylesheet" href="assets/css/account.css?v=20261009n">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body data-page="account">
@@ -44,6 +44,7 @@
     <section class="auth" id="vLogin" hidden>
       <h1 class="title" data-t="cabTitle">Кабінет</h1>
       <p class="lead" data-t="cabLead">Той самий акаунт, що й у застосунку 8nID Anty Pro.</p>
+      <div class="authtabs" role="tablist"><button type="button" class="chip is-active" data-view="vLogin" data-t="signIn">Увійти</button><button type="button" class="chip" data-view="vSignup" data-t="signUp">Реєстрація</button></div>
       <form class="auth__form" id="fLogin" novalidate>
         <div class="field"><label for="lEmail" data-t="email">Пошта</label><input class="input" id="lEmail" type="email" autocomplete="username" required></div>
         <div class="field"><label for="lPass" data-t="password">Пароль</label><input class="input" id="lPass" type="password" autocomplete="current-password" required></div>
@@ -51,7 +52,33 @@
         <button class="btn btn--primary btn--block" type="submit"><span data-t="signIn">Увійти</span></button>
         <div class="auth__links"><button class="linkbtn" type="button" data-view="vReset" data-t="forgot">Забули пароль?</button></div>
       </form>
-      <p class="auth__note"><span data-t="noAccount">Немає акаунта? Реєстрація — у застосунку.</span> <a class="linkbtn" href="index.html#start" data-t="navDownload">Завантажити</a></p>
+      <p class="auth__note"><span data-t="noAccount2">Немає акаунта?</span> <button class="linkbtn" type="button" data-view="vSignup" data-t="createAccount">Зареєструватися</button></p>
+    </section>
+
+    <!-- ===== sign up ===== -->
+    <section class="auth" id="vSignup" hidden>
+      <h1 class="title" data-t="signupTitle">Реєстрація</h1>
+      <p class="lead" data-t="signupLead">Один акаунт для сайту й застосунку. Free — 5 профілів назавжди, вмикається при першому вході в застосунок.</p>
+      <div class="authtabs" role="tablist"><button type="button" class="chip" data-view="vLogin" data-t="signIn">Увійти</button><button type="button" class="chip is-active" data-view="vSignup" data-t="signUp">Реєстрація</button></div>
+      <form class="auth__form" id="fSignup" novalidate>
+        <div class="field"><label for="sEmail" data-t="email">Пошта</label><input class="input" id="sEmail" type="email" autocomplete="username" required></div>
+        <div class="field"><label for="sPass" data-t="passwordMin">Пароль (мінімум 8 символів)</label><input class="input" id="sPass" type="password" autocomplete="new-password" minlength="8" required></div>
+        <div class="field"><label for="sRef" data-t="refOptional">Код запрошення (необовʼязково)</label><input class="input" id="sRef" autocomplete="off" maxlength="16" spellcheck="false"></div>
+        <label class="check"><input type="checkbox" id="sTerms" required><span><span data-t="acceptPre">Приймаю</span> <a class="linkbtn" href="terms.html" target="_blank" data-t="termsLink">Умови використання</a> <span data-t="and">і</span> <a class="linkbtn" href="rules.html" target="_blank" data-t="rulesLink">Правила</a><span data-t="acceptPost">. Як ми обробляємо дані — у</span> <a class="linkbtn" href="privacy.html" target="_blank" data-t="privacyLink">Політиці конфіденційності</a></span></label>
+        <div class="msg msg--err" id="sErr" hidden></div>
+        <button class="btn btn--primary btn--block" type="submit"><span data-t="createAccount">Зареєструватися</span></button>
+      </form>
+    </section>
+
+    <!-- ===== accept the terms (first web sign-in of an app-created account) ===== -->
+    <section class="auth" id="vTerms" hidden>
+      <h1 class="title" data-t="termsGateTitle">Умови використання</h1>
+      <p class="lead" data-t="termsGateLead">Перш ніж продовжити, ознайомся з документами сервісу й підтвердь згоду. Це потрібно один раз.</p>
+      <form class="auth__form" id="fTerms" novalidate>
+        <label class="check"><input type="checkbox" id="tTerms" required><span><span data-t="acceptPre">Приймаю</span> <a class="linkbtn" href="terms.html" target="_blank" data-t="termsLink">Умови використання</a> <span data-t="and">і</span> <a class="linkbtn" href="rules.html" target="_blank" data-t="rulesLink">Правила</a><span data-t="acceptPost">. Як ми обробляємо дані — у</span> <a class="linkbtn" href="privacy.html" target="_blank" data-t="privacyLink">Політиці конфіденційності</a></span></label>
+        <div class="msg msg--err" id="tErr" hidden></div>
+        <button class="btn btn--primary btn--block" type="submit"><span data-t="continue">Продовжити</span></button>
+      </form>
     </section>
 
     <!-- ===== verify e-mail ===== -->
@@ -242,9 +269,9 @@
   </div>
 </footer>
 
-<script src="assets/js/i18n.js?v=20261009m" defer></script>
-<script src="assets/js/site.js?v=20261009m" defer></script>
-<script src="assets/js/vendor/qrcode.js?v=20261009m" defer></script>
-<script src="assets/js/account.js?v=20261009m" defer></script>
+<script src="assets/js/i18n.js?v=20261009n" defer></script>
+<script src="assets/js/site.js?v=20261009n" defer></script>
+<script src="assets/js/vendor/qrcode.js?v=20261009n" defer></script>
+<script src="assets/js/account.js?v=20261009n" defer></script>
 </body>
 </html>
