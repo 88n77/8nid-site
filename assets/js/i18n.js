@@ -348,7 +348,11 @@ window.I18N = {
 "continue": "Продовжити",
 "err_terms_required": "Щоб продовжити, прийми Умови використання та Правила.",
 "err_terms_outdated": "Документи оновилися — перезавантаж сторінку.",
-"err_email_taken": "Ця пошта вже зареєстрована — увійди або віднови пароль."
+"err_email_taken": "Ця пошта вже зареєстрована — увійди або віднови пароль.",
+"supTitle": "Підтримка 8nID",
+"supText": "Питання про акаунт, оплату чи роботу браузера — напиши нам у Telegram.",
+"supGo": "Написати в Telegram",
+"@support": "Підтримка"
 },
 "en": {
 "navHome": "Home",
@@ -696,7 +700,11 @@ window.I18N = {
 "continue": "Continue",
 "err_terms_required": "To continue, accept the Terms of Service and the Acceptable Use rules.",
 "err_terms_outdated": "The documents were updated — reload the page.",
-"err_email_taken": "This email is already registered — sign in or reset your password."
+"err_email_taken": "This email is already registered — sign in or reset your password.",
+"supTitle": "8nID support",
+"supText": "Questions about your account, payment or the browser? Message us on Telegram.",
+"supGo": "Message on Telegram",
+"@support": "Support"
 },
 "pl": {
 "navHome": "Start",
@@ -1044,7 +1052,11 @@ window.I18N = {
 "continue": "Dalej",
 "err_terms_required": "Aby kontynuować, zaakceptuj Warunki korzystania i Zasady.",
 "err_terms_outdated": "Dokumenty zostały zaktualizowane — odśwież stronę.",
-"err_email_taken": "Ten e-mail jest już zarejestrowany — zaloguj się lub zresetuj hasło."
+"err_email_taken": "Ten e-mail jest już zarejestrowany — zaloguj się lub zresetuj hasło.",
+"supTitle": "Wsparcie 8nID",
+"supText": "Pytania o konto, płatność lub działanie przeglądarki? Napisz do nas na Telegramie.",
+"supGo": "Napisz na Telegramie",
+"@support": "Wsparcie"
 },
 "ru": {
 "navHome": "Главная",
@@ -1392,7 +1404,11 @@ window.I18N = {
 "continue": "Продолжить",
 "err_terms_required": "Чтобы продолжить, прими Условия использования и Правила.",
 "err_terms_outdated": "Документы обновились — перезагрузи страницу.",
-"err_email_taken": "Эта почта уже зарегистрирована — войди или восстанови пароль."
+"err_email_taken": "Эта почта уже зарегистрирована — войди или восстанови пароль.",
+"supTitle": "Поддержка 8nID",
+"supText": "Вопросы об аккаунте, оплате или работе браузера — напиши нам в Telegram.",
+"supGo": "Написать в Telegram",
+"@support": "Поддержка"
 },
 "fr": {
 "navHome": "Accueil",
@@ -1740,7 +1756,11 @@ window.I18N = {
 "continue": "Continuer",
 "err_terms_required": "Pour continuer, acceptez les Conditions d'utilisation et les Règles.",
 "err_terms_outdated": "Les documents ont été mis à jour — rechargez la page.",
-"err_email_taken": "Cet e-mail est déjà inscrit — connectez-vous ou réinitialisez le mot de passe."
+"err_email_taken": "Cet e-mail est déjà inscrit — connectez-vous ou réinitialisez le mot de passe.",
+"supTitle": "Support 8nID",
+"supText": "Une question sur votre compte, un paiement ou le navigateur ? Écrivez-nous sur Telegram.",
+"supGo": "Écrire sur Telegram",
+"@support": "Support"
 },
 "pt": {
 "navHome": "Início",
@@ -2088,7 +2108,11 @@ window.I18N = {
 "continue": "Continuar",
 "err_terms_required": "Para continuar, aceita os Termos de utilização e as Regras.",
 "err_terms_outdated": "Os documentos foram atualizados — recarrega a página.",
-"err_email_taken": "Este e-mail já está registado — entra ou repõe a palavra-passe."
+"err_email_taken": "Este e-mail já está registado — entra ou repõe a palavra-passe.",
+"supTitle": "Suporte 8nID",
+"supText": "Dúvidas sobre a conta, o pagamento ou o navegador? Escreve-nos no Telegram.",
+"supGo": "Escrever no Telegram",
+"@support": "Suporte"
 },
 "tr": {
 "navHome": "Ana sayfa",
@@ -2436,7 +2460,11 @@ window.I18N = {
 "continue": "Devam et",
 "err_terms_required": "Devam etmek için Kullanım Koşulları'nı ve Kuralları kabul et.",
 "err_terms_outdated": "Belgeler güncellendi — sayfayı yenile.",
-"err_email_taken": "Bu e-posta zaten kayıtlı — giriş yap veya şifreni sıfırla."
+"err_email_taken": "Bu e-posta zaten kayıtlı — giriş yap veya şifreni sıfırla.",
+"supTitle": "8nID destek",
+"supText": "Hesap, ödeme veya tarayıcıyla ilgili sorular için bize Telegram'dan yaz.",
+"supGo": "Telegram'dan yaz",
+"@support": "Destek"
 }
 };
 window.I18N_META = {

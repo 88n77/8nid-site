@@ -414,6 +414,32 @@ body.modal-open{overflow:hidden}
 .doc ol.steps-list{list-style:decimal;padding-left:22px;margin:0 0 14px}
 .doc ol.steps-list li{padding-left:4px}
 
+/* ---------- support widget (same look as the app's support button) ---------- */
+.sup{position:fixed;right:22px;bottom:22px;z-index:50;display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.sup__fab{display:flex;align-items:center;gap:0;height:52px;min-width:52px;padding:0 16px;border-radius:26px;color:#fff;
+  background:linear-gradient(180deg,#33a8e5,#1f8dd0);box-shadow:0 8px 24px rgba(31,141,208,.35),inset 0 1px 0 rgba(255,255,255,.2);
+  transition:box-shadow .2s,transform .15s,gap .25s}
+.sup__fab svg{width:21px;height:21px;fill:#fff;flex:none}
+.sup__fab span{max-width:0;overflow:hidden;white-space:nowrap;font-size:14px;font-weight:700;transition:max-width .3s ease}
+.sup__fab:hover,.sup.is-open .sup__fab{gap:9px;box-shadow:0 12px 30px rgba(31,141,208,.45);transform:translateY(-1px)}
+.sup__fab:hover span,.sup.is-open .sup__fab span{max-width:140px}
+.sup__card{width:min(320px,calc(100vw - 32px));background:#141414;border:1px solid rgba(255,255,255,.12);border-top:3px solid #2a9fdc;
+  box-shadow:0 24px 60px rgba(0,0,0,.6);padding:20px 20px 18px;display:grid;gap:12px;
+  opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .25s var(--ease),transform .35s var(--ease),visibility 0s .35s}
+.sup.is-open .sup__card{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.sup__head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.sup__head b{font-weight:900;font-size:16px}
+.sup__x{width:30px;height:30px;border:1px solid rgba(255,255,255,.25);position:relative;flex:none}
+.sup__x::before,.sup__x::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:1.5px;background:#fff;transform:translate(-50%,-50%) rotate(45deg)}
+.sup__x::after{transform:translate(-50%,-50%) rotate(-45deg)}
+.sup__card p{color:var(--gray);font-size:14px;line-height:1.5}
+.sup__go{display:flex;align-items:center;justify-content:center;gap:10px;height:46px;background:#2a9fdc;color:#fff;font-weight:900;font-size:15px;transition:background .2s}
+.sup__go:hover{background:#1f8dd0}
+.sup__go svg{width:18px;height:18px;fill:#fff}
+body.modal-open .sup,body.menu-open .sup{display:none}
+@media (max-width:760px){.sup{right:14px;bottom:14px}.sup__fab{height:48px;min-width:48px;padding:0 14px}}
+@media print{.sup{display:none}}
+
 /* ---------- responsive ---------- */
 @media (max-width:1500px){
   .tabs{grid-template-columns:repeat(2,minmax(0,1fr))}

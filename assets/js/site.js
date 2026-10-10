@@ -172,10 +172,10 @@
   // Same table the server starts with; replaced by the live one from /pay/plans when it answers.
   let PLANS = {
     tiers: [
-      { code: 'p20', profiles: 20, name: 'Pro 20', usd: 12, sync: false }, { code: 'p50', profiles: 50, name: 'Pro 50', usd: 24 },
-      { code: 'p100', profiles: 100, name: 'Pro', usd: 39 }, { code: 'p300', profiles: 300, name: 'Pro+', usd: 89 },
-      { code: 'p500', profiles: 500, name: 'Pro Ultra 500', usd: 129 }, { code: 'p1000', profiles: 1000, name: 'Pro Ultra 1000', usd: 199 },
-      { code: 'pmax', profiles: 0, name: 'Pro Max', usd: 299 }],
+      { code: 'p20', profiles: 20, name: 'Pro 20', usd: 10, sync: false }, { code: 'p50', profiles: 50, name: 'Pro 50', usd: 20 },
+      { code: 'p100', profiles: 100, name: 'Pro', usd: 33 }, { code: 'p300', profiles: 300, name: 'Pro+', usd: 69 },
+      { code: 'p500', profiles: 500, name: 'Pro Ultra 500', usd: 99 }, { code: 'p1000', profiles: 1000, name: 'Pro Ultra 1000', usd: 159 },
+      { code: 'pmax', profiles: 0, name: 'Pro Max', usd: 249 }],
     terms: [{ months: 1, days: 30, discount: 0 }, { months: 3, days: 90, discount: 10 },
       { months: 6, days: 180, discount: 20 }, { months: 12, days: 365, discount: 30 }],
     prices: null, free: { profiles: 5 },
@@ -193,7 +193,7 @@
   const monthsText = m => tr(m === 1 ? 'month1' : 'monthsN', m);
   const termShort = m => tr('monthsN', m);   // chips: the same short form for every term
 
-  const sel = { tier: 'p100', months: 12 };
+  const sel = { tier: 'p100', months: 1 };
   const sortedTiers = () => PLANS.tiers.slice().sort((a, b) => (a.profiles || 1e9) - (b.profiles || 1e9));
   const termOf = m => PLANS.terms.find(t => t.months === m) || PLANS.terms[0];
 
@@ -327,6 +327,32 @@
     refBox.hidden = false; $('#refCode').textContent = ref;
     $('#refCopy').addEventListener('click', () => navigator.clipboard && navigator.clipboard.writeText(ref));
   }
+
+
+  /* ---------------- support widget (bottom-right on every page) ---------------- */
+  const TG = 'https://t.me/a8nID_support';
+  const PLANE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.2 4.3 2.9 11.4c-1 .4-1 1.8.1 2.1l4.6 1.4 1.8 5.5c.3.8 1.3 1 1.9.4l2.6-2.5 4.6 3.4c.7.5 1.7.1 1.9-.7l3.1-14.9c.2-1-.8-1.8-1.7-1.4zM9.6 14.6l8.3-7.4-6.4 8.6-.3 3z"/></svg>';
+  const sup = document.createElement('div');
+  sup.className = 'sup';
+  sup.innerHTML = `<div class="sup__card" id="supCard" role="dialog" aria-labelledby="supTitle" hidden>
+      <div class="sup__head"><b id="supTitle" data-t="supTitle">Підтримка 8nID</b><button class="sup__x" type="button" data-ta="close" aria-label="Закрити"></button></div>
+      <p data-t="supText">Питання про акаунт, оплату чи роботу браузера — напиши нам у Telegram.</p>
+      <a class="sup__go" href="${TG}" target="_blank" rel="noopener noreferrer">${PLANE}<span data-t="supGo">Написати в Telegram</span></a>
+    </div>
+    <button class="sup__fab" type="button" aria-expanded="false" aria-controls="supCard" data-ta="support">${PLANE}<span data-t="support">Підтримка</span></button>`;
+  document.body.appendChild(sup);
+  const supCard = sup.querySelector('.sup__card'), supFab = sup.querySelector('.sup__fab');
+  function supToggle(open) {
+    if (open) supCard.hidden = false;
+    requestAnimationFrame(() => sup.classList.toggle('is-open', open));
+    supFab.setAttribute('aria-expanded', open);
+    if (open) setTimeout(() => sup.querySelector('.sup__go').focus({ preventScroll: true }), 50);
+    else setTimeout(() => { if (!sup.classList.contains('is-open')) supCard.hidden = true; }, 350);
+  }
+  supFab.addEventListener('click', () => supToggle(!sup.classList.contains('is-open')));
+  sup.querySelector('.sup__x').addEventListener('click', () => { supToggle(false); supFab.focus(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && sup.classList.contains('is-open')) { supToggle(false); supFab.focus(); } });
+  document.addEventListener('click', e => { if (sup.classList.contains('is-open') && !sup.contains(e.target)) supToggle(false); });
 
   const yr = $('#year'); if (yr) yr.textContent = new Date().getFullYear();
 
