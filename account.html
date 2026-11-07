@@ -9,15 +9,15 @@
 <meta name="referrer" content="no-referrer">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="assets/img/favicon-32.png" type="image/png" sizes="32x32">
-<link rel="stylesheet" href="assets/css/site.css?v=20261010b">
-<link rel="stylesheet" href="assets/css/account.css?v=20261010b">
+<link rel="stylesheet" href="assets/css/site.css?v=20261107a">
+<link rel="stylesheet" href="assets/css/account.css?v=20261107a">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body data-page="account">
 
 <header class="top is-stuck" id="top">
   <div class="wrap top__in">
-    <a class="logo logo--full" href="index.html"><img class="logo__mark" src="assets/img/logo-64.webp" srcset="assets/img/logo-64.webp 1x, assets/img/logo-128.webp 2x" alt="" width="34" height="34"><span>8nID <b>Anty</b></span><em class="pro">PRO</em></a>
+    <a class="logo logo--full" href="/"><img class="logo__mark" src="assets/img/logo-64.webp" srcset="assets/img/logo-64.webp 1x, assets/img/logo-128.webp 2x" alt="" width="34" height="34"><span>8nID <b>Anty</b></span><em class="pro">PRO</em></a>
     <div class="top__right">
       <div class="langsel" id="langsel">
         <button class="lang" id="langBtn" type="button" aria-haspopup="listbox" aria-expanded="false" data-ta="language" aria-label="Мова"><span id="langCode">UA</span></button>
@@ -31,7 +31,7 @@
           <li><button type="button" role="option" data-lang="tr"><b>TR</b>Türkçe</button></li>
         </ul>
       </div>
-      <a class="btn btn--ghost btn--sm" href="index.html"><span data-t="toSite">На сайт</span></a>
+      <a class="btn btn--ghost btn--sm" href="/"><span data-t="toSite">На сайт</span></a>
       <button class="btn btn--ghost btn--sm" type="button" id="logoutBtn" hidden><span data-t="logout">Вийти</span></button>
     </div>
   </div>
@@ -64,7 +64,7 @@
         <div class="field"><label for="sEmail" data-t="email">Пошта</label><input class="input" id="sEmail" type="email" autocomplete="username" required></div>
         <div class="field"><label for="sPass" data-t="passwordMin">Пароль (мінімум 8 символів)</label><input class="input" id="sPass" type="password" autocomplete="new-password" minlength="8" required></div>
         <div class="field"><label for="sRef" data-t="refOptional">Код запрошення (необовʼязково)</label><input class="input" id="sRef" autocomplete="off" maxlength="16" spellcheck="false"></div>
-        <label class="check"><input type="checkbox" id="sTerms" required><span><span data-t="acceptPre">Приймаю</span> <a class="linkbtn" href="terms.html" target="_blank" data-t="termsLink">Умови використання</a> <span data-t="and">і</span> <a class="linkbtn" href="rules.html" target="_blank" data-t="rulesLink">Правила</a><span data-t="acceptPost">. Як ми обробляємо дані — у</span> <a class="linkbtn" href="privacy.html" target="_blank" data-t="privacyLink">Політиці конфіденційності</a></span></label>
+        <label class="check"><input type="checkbox" id="sTerms" required><span><span data-t="acceptPre">Приймаю</span> <a class="linkbtn" href="/terms" target="_blank" data-t="termsLink">Умови використання</a> <span data-t="and">і</span> <a class="linkbtn" href="/rules" target="_blank" data-t="rulesLink">Правила</a><span data-t="acceptPost">. Як ми обробляємо дані — у</span> <a class="linkbtn" href="/privacy" target="_blank" data-t="privacyLink">Політиці конфіденційності</a></span></label>
         <div class="msg msg--err" id="sErr" hidden></div>
         <button class="btn btn--primary btn--block" type="submit"><span data-t="createAccount">Зареєструватися</span></button>
       </form>
@@ -75,7 +75,7 @@
       <h1 class="title" data-t="termsGateTitle">Умови використання</h1>
       <p class="lead" data-t="termsGateLead">Перш ніж продовжити, ознайомся з документами сервісу й підтвердь згоду. Це потрібно один раз.</p>
       <form class="auth__form" id="fTerms" novalidate>
-        <label class="check"><input type="checkbox" id="tTerms" required><span><span data-t="acceptPre">Приймаю</span> <a class="linkbtn" href="terms.html" target="_blank" data-t="termsLink">Умови використання</a> <span data-t="and">і</span> <a class="linkbtn" href="rules.html" target="_blank" data-t="rulesLink">Правила</a><span data-t="acceptPost">. Як ми обробляємо дані — у</span> <a class="linkbtn" href="privacy.html" target="_blank" data-t="privacyLink">Політиці конфіденційності</a></span></label>
+        <label class="check"><input type="checkbox" id="tTerms" required><span><span data-t="acceptPre">Приймаю</span> <a class="linkbtn" href="/terms" target="_blank" data-t="termsLink">Умови використання</a> <span data-t="and">і</span> <a class="linkbtn" href="/rules" target="_blank" data-t="rulesLink">Правила</a><span data-t="acceptPost">. Як ми обробляємо дані — у</span> <a class="linkbtn" href="/privacy" target="_blank" data-t="privacyLink">Політиці конфіденційності</a></span></label>
         <div class="msg msg--err" id="tErr" hidden></div>
         <button class="btn btn--primary btn--block" type="submit"><span data-t="continue">Продовжити</span></button>
       </form>
@@ -159,7 +159,7 @@
               <ul class="sum__rows" id="qRows"></ul>
               <div class="msg" id="qWarn" hidden></div>
               <button class="btn btn--primary btn--block" type="button" id="bInvoice"><span data-t="getInvoice">Отримати рахунок</span></button>
-              <p class="fineprint"><span data-t="agreeTerms">Оплачуючи, ти приймаєш</span> <a class="linkbtn" href="terms.html" target="_blank" data-t="termsShort">Умови</a> <span data-t="and">і</span> <a class="linkbtn" href="rules.html" target="_blank" data-t="rulesShort">Правила</a>.</p>
+              <p class="fineprint"><span data-t="agreeTerms">Оплачуючи, ти приймаєш</span> <a class="linkbtn" href="/terms" target="_blank" data-t="termsShort">Умови</a> <span data-t="and">і</span> <a class="linkbtn" href="/rules" target="_blank" data-t="rulesShort">Правила</a>.</p>
             </div>
           </div>
         </article>
@@ -252,16 +252,16 @@
 <footer class="footer">
   <div class="wrap footer__in">
     <div class="footer__brand">
-      <a class="logo logo--full" href="index.html"><img class="logo__mark" src="assets/img/logo-64.webp" alt="" width="34" height="34"><span>8nID <b>Anty</b></span><em class="pro">PRO</em></a>
+      <a class="logo logo--full" href="/"><img class="logo__mark" src="assets/img/logo-64.webp" alt="" width="34" height="34"><span>8nID <b>Anty</b></span><em class="pro">PRO</em></a>
     </div>
     <nav class="footer__links">
-      <a href="index.html#taryfy" data-t="navPricing">Тарифи</a>
+      <a href="/#taryfy" data-t="navPricing">Тарифи</a>
       <a href="https://t.me/a8nID_support" target="_blank" rel="noopener noreferrer" data-t="support">Підтримка</a>
     </nav>
     <nav class="footer__links">
-      <a href="terms.html" data-t="legalTerms">Умови використання</a>
-      <a href="privacy.html" data-t="legalPrivacy">Політика конфіденційності</a>
-      <a href="rules.html" data-t="legalRules">Правила та порушення</a>
+      <a href="/terms" data-t="legalTerms">Умови використання</a>
+      <a href="/privacy" data-t="legalPrivacy">Політика конфіденційності</a>
+      <a href="/rules" data-t="legalRules">Правила та порушення</a>
     </nav>
     <hr>
     <small>© <span id="year">2026</span> 8nID Anty Pro</small>
@@ -269,9 +269,9 @@
   </div>
 </footer>
 
-<script src="assets/js/i18n.js?v=20261010b" defer></script>
-<script src="assets/js/site.js?v=20261010b" defer></script>
-<script src="assets/js/vendor/qrcode.js?v=20261010b" defer></script>
-<script src="assets/js/account.js?v=20261010b" defer></script>
+<script src="assets/js/i18n.js?v=20261107a" defer></script>
+<script src="assets/js/site.js?v=20261107a" defer></script>
+<script src="assets/js/vendor/qrcode.js?v=20261107a" defer></script>
+<script src="assets/js/account.js?v=20261107a" defer></script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 {
-  "cleanUrls": false,
+  "cleanUrls": true,
+  "trailingSlash": false,
   "headers": [
     {
       "source": "/(.*)",
@@ -11,7 +12,7 @@
       ]
     },
     {
-      "source": "/account.html",
+      "source": "/account",
       "headers": [
         { "key": "Referrer-Policy", "value": "no-referrer" },
         { "key": "Cache-Control", "value": "no-store" }

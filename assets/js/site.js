@@ -272,7 +272,7 @@
     const full = $('#planFull');
     full.hidden = !(p.pay < p.full); full.textContent = usd(p.full);
     $('#planMo').textContent = m.months > 1 ? tr('perMonthEq', usd(p.pay / m.months)) : '';
-    $('#planGo').href = `account.html?buy=${encodeURIComponent(t.code)}&m=${m.months}` + (lang !== 'uk' ? `&lang=${lang}` : '');
+    $('#planGo').href = `/account?buy=${encodeURIComponent(t.code)}&m=${m.months}` + (lang !== 'uk' ? `&lang=${lang}` : '');
   }
   function showModal(m, from) {
     if (!m) return;
