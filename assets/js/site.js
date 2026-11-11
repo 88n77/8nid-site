@@ -47,6 +47,13 @@
     const code = $('#langCode'); if (code) code.textContent = lang === 'uk' ? 'UA' : lang.toUpperCase();
     $$('[data-lang]').forEach(b => b.classList.toggle('is-active', b.dataset.lang === lang));
     if (releaseTag) $$('.release-version').forEach(el => (el.textContent = releaseTag));
+    // app screenshots exist in the app's own languages: uk, ru, en (the rest of the site's languages get en)
+    const shotLang = lang === 'uk' || lang === 'ru' ? lang : 'en';
+    $$('img[data-shot]').forEach(img => {
+      const swap = v => v.replace(/-(uk|en|ru)(-sm)?\.webp/g, `-${shotLang}$2.webp`);
+      if (img.srcset) img.srcset = swap(img.srcset);
+      img.src = swap(img.getAttribute('src'));
+    });
     // legal pages exist in uk + en only
     const docs = $$('.doc__body[data-l]');
     if (docs.length) {
