@@ -165,12 +165,11 @@
   /* ---------------- latest release (.exe) ---------------- */
   let releaseTag = '';
   if ($('.dl-link') || $('.release-version')) {
-    fetch('https://api.github.com/repos/88n77/8nid-anty-pro/releases/latest')
+    // buttons already point to dl.8nid.com (always the latest build); here we only show the version
+    fetch('https://dl.8nid.com/latest.json')
       .then(r => (r.ok ? r.json() : Promise.reject()))
       .then(rel => {
-        const exe = (rel.assets || []).find(a => /\.exe$/i.test(a.name));
-        if (exe) $$('.dl-link').forEach(a => (a.href = exe.browser_download_url));
-        releaseTag = rel.tag_name || '';
+        releaseTag = rel.tag || '';
         if (releaseTag) $$('.release-version').forEach(el => (el.textContent = releaseTag));
       }).catch(() => {});
   }
